@@ -14,26 +14,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 
-
-
 @Entity
 @Scope("session")
     
 @Table(name="user")
 public class User implements UserDetails{
 	
-	
-	
-
-	private static final long serialVersionUID = 1L;  //what it actually means ?
+	private static final long serialVersionUID = 1L;  
 	
 	@Id
 	private String username;
 	private String password;
+	private String phone;
 	private String name;
-	private String contactno;
-	
-	
 	public User()
 	{
 		
@@ -45,11 +38,11 @@ public class User implements UserDetails{
 		this.password = password;
 	}
 	
-	public User(String username,String password,String contactno,String name)
+	public User(String username,String password,String phone,String name)
 	{
 		this.username = username;
 		this.password = password;
-		this.contactno = contactno;
+		this.phone = phone;
 		this.name = name;
 	}
 	
@@ -64,14 +57,14 @@ public class User implements UserDetails{
 	
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", name=" + name + ", contactno=" + contactno
+		return "User [username=" + username + ", password=" + password + ", name=" + name + ", phone=" + phone
 				 + "]";
 	}
 
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {     
-		// what should we return here
+		
 		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 	
@@ -116,12 +109,12 @@ public class User implements UserDetails{
 		this.name = name;
 	}
 
-	public String getContactno() {
-		return contactno;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setContactno(String contactno) {
-		this.contactno = contactno;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 

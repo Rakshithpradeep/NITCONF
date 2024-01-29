@@ -11,13 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-
 import jakarta.servlet.http.HttpSession;
 import pc.Data.UserRepository;
 import pc.Model.User;
-
-
-
 
 @Controller
 @RequestMapping("/dashboard")
@@ -28,15 +24,12 @@ public class DashboardController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	
 	@ModelAttribute("user")
 	public User user()
 	{
 		return new User();
 	}
 
-	
-	
 	@GetMapping
 	public String dashboard(Principal principal,Model model,HttpSession session)
 	{
