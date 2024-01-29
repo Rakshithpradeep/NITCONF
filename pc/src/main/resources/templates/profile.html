@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url("https://img.freepik.com/free-vector/abstract-watercolor-pastel-background_87374-139.jpg?w=1380&t=st=1706442501~exp=1706443101~hmac=d8ee8d144695c8b7c67cd20ac0017d147a67f1f4d4ba63353a99b78f2b6bcd6e");
+            height: 100vh;
+      color: #fff;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .profile-container {
+      max-width: 400px;
+      width: 100%;
+     background: linear-gradient(90deg, #2980b9, #2c3e50);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+ .edit-button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .save-button {
+      background-color: #2ecc71;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .user-info {
+      margin-bottom: 15px;
+    }
+
+    .label {
+      font-weight: bold;
+      color:white;
+      font-size:17px;
+      margin-bottom: 5px;
+    }
+.cardd {
+  box-shadow: 10px 10px 5px lightblue;
+}
+    p {
+      margin: 0;
+      
+      color:#8ac1e3;
+      font-family:"Roboto";
+      font-weight:bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="profile-container cardd">
+    <img class="profile-img" src="download.png" alt="Profile Picture">
+
+    <div class="user-info">
+      <p class="label">Name:</p>
+     <p id="name">PC member</p>
+      <input type="text" id="editName" style="display: none;">
+    </div>
+
+    <div class="user-info">
+      <p class="label">Email:</p>
+      <p id="email">pcmember@gmail.com</p>
+      <input type="text" id="editEmail" style="display: none;">
+    </div>
+
+     <div class="user-info">
+      <p class="label">Role:</p>
+      <p id="role">Program Committee member</p>
+      <input type="text" id="editRole" style="display: none;">
+    </div>
+
+    <div class="user-info">
+      <p class="label">Expertise:</p>
+      <p id="expertise">Web Development, JavaScript, Python</p>
+      <input type="text" id="editExpertise" style="display: none;">
+    </div>
+
+    <div class="user-info">
+      <p class="label">Phone Number:</p>
+      <p id="phoneNumber">987646578</p>
+      <input type="text" id="editPhoneNumber" style="display: none;">
+    </div>
+
+    <button class="edit-button" onclick="toggleEditMode()">Edit Profile</button>
+    <button class="edit-button save-button" onclick="saveChanges()" style="display: none;">Save Changes</button>
+
+  </div>
+   <script>
+    function toggleEditMode() {
+      const elementsToToggle = [
+        "name", "editName",
+        "email", "editEmail",
+        "role", "editRole",
+        "expertise", "editExpertise",
+        "phoneNumber", "editPhoneNumber"
+      ];
+
+      elementsToToggle.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.style.display = (element.style.display === "none") ? "block" : "none";
+        }
+      });
+
+      const editButton = document.querySelector('.edit-button');
+      const saveButton = document.querySelector('.save-button');
+
+      if (editButton && saveButton) {
+        editButton.style.display = (editButton.style.display === "none") ? "block" : "none";
+        saveButton.style.display = (saveButton.style.display === "none") ? "block" : "none";
+      }
+    }
+
+    function saveChanges() {
+      const name = document.getElementById('editName').value;
+      const email = document.getElementById('editEmail').value;
+      const role = document.getElementById('editRole').value;
+      const expertise = document.getElementById('editExpertise').value;
+      const phoneNumber = document.getElementById('editPhoneNumber').value;
+
+      document.getElementById('name').innerText = name;
+      document.getElementById('email').innerText = email;
+      document.getElementById('role').innerText = role;
+      document.getElementById('expertise').innerText = expertise;
+      document.getElementById('phoneNumber').innerText = phoneNumber;
+
+      toggleEditMode(); // Hide the input fields and show the text again
+    }
+  </script>
+
+</body>
+
+</html>
