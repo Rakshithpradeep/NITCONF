@@ -135,27 +135,27 @@ The program committee page on NITCONF will function as an interface for program 
 
 ### **2.2.1.View Submissions by Authors:** 
 
-Program committee can comprehensively view all papers submitted by authors, gaining a holistic understanding of the conference content. 
+Program committee can comprehensively view all papers submitted by authors.
 
 
 ### **2.2.2.Assign Reviewing Tasks to Reviewers:**
 
- Program committee members have the authority to strategically allocate reviewing tasks to specific reviewers, ensuring a balanced and thorough evaluation process.
+ Program committee members have the authority to strategically allocate reviewing tasks to specific reviewers.
 
 
 ### **2.2.3.Send Reminders for Reviewer Schedule:**
 
-The platform enables committee members to issue timely reminders to reviewers, helping to keep the evaluation process on track and ensuring deadlines are met
+The platform enables committee members to issue timely reminders to reviewers.
 
 
-### **2.2.4.Contact Authors for Clarifications:**
+### **2.2.4.Contact Authors and reviewers for Clarifications:**
 
-Committee members can easily communicate with authors, seeking clarifications or additional information to enhance the evaluation process. 
+Committee members can easily communicate with authors and reviwers
 
 
 ### **2.2.5.Make Acceptance or Rejection Decisions:**
 
-Ultimately, the committee possesses the power to make crucial decisions regarding the acceptance or rejection of papers, shaping the final composition of the conference program.
+Ultimately, the committee possesses the power to make crucial decisions regarding the acceptance or rejection of papers.
 
 
 ### **2.2.6.Assign Additional Reviewer for Complex Cases:**
@@ -167,7 +167,7 @@ In situations where committee members find it challenging to make decisions base
 ### **2.2.7. Filter by Tags:**
 
 
-Committee members can utilise a sophisticated filtering system to categorise papers based on tags,aiding in the efficient identification of noteworthy submissions.
+Committee members can utilise a filtering system to categorise papers based on tags, aiding in the efficient identification of certain submissions.
 
 
 ## **2.3. User Classes and Characteristics**
@@ -180,17 +180,17 @@ Committee members can utilise a sophisticated filtering system to categorise pap
 
 **Functions Used:**
 
-- View Submissions by Authors: Program committee members can comprehensively view all papers submitted by authors, gaining a holistic understanding of the conference content.
+- View Submissions by Authors: Program committee members can comprehensively view all papers submitted by authors.
 
-- Manage their Profile: They can update their profiles, ensuring accurate and up-to-date information, enhancing the overall effectiveness of the reviewing process.
+- Manage their Profile: They can update their profiles, ensuring accurate and up-to-date information.
 
-- Assign Reviewing Tasks to Reviewers: Program committee members strategically allocate reviewing tasks to specific reviewers, ensuring a balanced and thorough evaluation process.
+- Assign Reviewing Tasks to Reviewers: Program committee members strategically allocate reviewing tasks to specific reviewers.
 
-- Send Reminders for Reviewer Schedule: The platform enables committee members to issue timely reminders to reviewers, helping to keep the evaluation process on track and ensuring deadlines are met.
+- Send Reminders for Reviewer Schedule: The platform enables committee members to issue timely reminders to reviewers.
 
-- Contact Authors for Clarifications: Committee members can easily communicate with authors, seeking clarifications or additional information to enhance the evaluation process.
+- Contact Authors for Clarifications: Committee members can easily communicate with authors and reviewers.
 
-- Make Acceptance or Rejection Decisions: The committee possesses the power to make crucial decisions regarding the acceptance or rejection of papers, shaping the final composition of the conference program.
+- Make Acceptance or Rejection Decisions: The committee possesses the power to make crucial decisions regarding the acceptance or rejection of papers.
 
 - Assign Additional Reviewer for Complex Cases: In situations where committee members find it challenging to make decisions based on past reviews and comments, they can assign an additional reviewer to thoroughly assess the paper and contribute to informed decision-making.
 
