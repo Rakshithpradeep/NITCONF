@@ -41,10 +41,10 @@ public class SecurityConfig{
 	
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {     //need to understand 
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {    
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home").permitAll()
+				.requestMatchers("/").permitAll()
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
@@ -54,6 +54,7 @@ public class SecurityConfig{
 			)
 			.logout((logout) -> logout.permitAll());
 
+		
 		return http.build();
 	}
 	

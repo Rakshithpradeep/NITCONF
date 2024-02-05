@@ -34,7 +34,7 @@ public class DashboardController {
 	public String dashboard(Principal principal,Model model,HttpSession session)
 	{
 		
-		User user = userRepository.findById(userRepository.findUserByUsername(principal.getName()).getUsername()).get();
+		User user = userRepository.findById(userRepository.findByUsername(principal.getName()).getUsername()).get();
 		model.addAttribute("user", user);
 		System.out.println(user.toString());
 		return "dashboard";
