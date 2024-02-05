@@ -4,13 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequestMapping("/")
 public class LoginController {
 	
-	
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoginController.class);
+
 
 	@GetMapping("/login")
 	public String login()
@@ -23,7 +23,7 @@ public class LoginController {
 	public String loginForm()
 	{ 
 		
-		return "redirect:/dasboard";
+    	return "redirect:/dashboard";
 		
 	}
 }
