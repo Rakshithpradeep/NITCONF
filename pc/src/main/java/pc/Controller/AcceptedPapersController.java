@@ -2,13 +2,20 @@ package pc.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class for handling requests related to accepted papers.
+ */
 @Controller
 public class AcceptedPapersController {
-	
-@GetMapping("/acceptedpapers")	
-public String acceptedpapers() {
-	return "acceptedpapers";
-}
+
+    /**
+     * Handles the GET request for "/acceptedpapers" endpoint.
+     *
+     * @return The view name for the accepted papers page.
+     */
+    @GetMapping("/acceptedpapers")
+    public String acceptedpapers() {
+        return "acceptedpapers";
+    }
 }

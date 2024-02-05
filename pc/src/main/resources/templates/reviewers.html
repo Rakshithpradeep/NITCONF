@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -252,55 +253,45 @@
 
             <h1 class="hu">NITCONF</h1>
             <div class="profile-section" >
-                <a th:href="@{/profile}"><span class="fa fa-user icon" style="font-size:24px;color:white"></span></a>
+                <a href="profile.html"><span class="fa fa-user icon" style="font-size:24px;color:white"></span></a>
             </div>
         </div>
 
      </header>
      <nav>
-       <a th:href="@{/dashboard}"><span class="icon">&#127968;</span> Home</a>
+        <h2 class="navH">MENU</h2>
+        <a th:href="@{/dashboard}"><span class="icon">&#127968;</span> Home</a>
         <a th:href="@{/reviewers}"><span class="icon">&#127991;</span> Reviewers</a>
         <a th:href="@{/discussions}"><span class="icon">&#128172;</span> Discussions</a>
         <a th:href="@{/reviewedpapers}"><span class="icon">&#128195;</span> Reviewed Papers</a>
         <a th:href="@{/unreviewedpapers}"><span class="icon">&#128190;</span> Unreviewed Papers</a>
         <a th:href="@{/acceptedpapers}"><span class="icon">&#128221;</span> Accepted Papers</a>
         <a th:href="@{/rejectedpapers}"><span class="icon">&#128683;</span> Rejected Papers</a>
-        <a th:href="@{/logout}" value="Logout" class="logout-icon">&#128075;</span> LogOut</a>
+        <a th:href="@{/logout}" value="Logout" class="logout-icon">&#128075; LogOut</a>
         <a href="#" onclick="closeMenu()" class="back-icon">&#8592;<i class=""></i> </a>
 
     </nav>
     <main>
         <div class="dashboard-container">
             <h2 style="color: #3498db;">Reviewers</h2>
+                <!-- Displaying Reviewers Table -->
             <table>
-                <thead>
-                    <tr>
+               
+                <tbody>
+                   <tr>
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>Id</th>
                         <th>Expertise</th>
+                        <th>Email</th>
                         <th>Mobile</th>
                     </tr>
-                </thead>
-                <tbody>
+                    <tr th:each="reviewer: ${reviewersList}">
+                        <td th:text="${reviewer.Name}"></td>
+                        <td th:text="${reviewer.id}"></td>
+                        <td th:text="${reviewer.Expertise}"></td>
+                        <td th:text="${reviewer.Email}"></td>
+                        <td th:text="${reviewer.Mobile}"></td>
                     <tr>
-                        <td>Avinash</td>
-                        <td>avinash@gmail.com</td>
-                        <td>Machine Learning</td>
-                        <td>9373738309</td>
-                    </tr>
-                   <tr>
-                        <td>Abhiram</td>
-                        <td>abhiram@gmail.com</td>
-                        <td>Data Science</td>
-                        <td>8456465754</td>
-                    </tr>
-                    <tr>
-                        <td>Vinay</td>
-                        <td>vinay@gmail.com</td>
-                        <td>Data Analytics</td>
-                        <td>7856412365</td>
-                    </tr>
-                    <!-- Add more rows with dummy information and abstract links as needed -->
                 </tbody>
             </table>
 
@@ -324,8 +315,7 @@
             </div>
         </div>
     </main>
-
-    <script>
+     <script>
         const menuIcon = document.getElementById('menu-icon');
         const menuToggle = document.getElementById('menu-toggle');
         const mainContent = document.querySelector('main');
@@ -391,3 +381,4 @@
 </body>
 
 </html>
+
