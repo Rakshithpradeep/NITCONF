@@ -20,7 +20,7 @@ public class SecurityUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) {
 		
 		
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findUserByUsername(username);
 		
 		if(user!= null)
 			return user;

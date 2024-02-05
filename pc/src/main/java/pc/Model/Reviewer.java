@@ -1,71 +1,118 @@
 package pc.Model;
 
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue; 
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * Entity class representing a reviewer.
+ */
 @Entity
 @Table(name = "reviewers")
 public class Reviewer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reviewer_id")
     private Long id;
 
     private String Name;
-
     private String Email;
-    
     private String Expertise;
-    
-
     private String Mobile;
 
-	public String getName() {
-		return Name;
-	}
+    /**
+     * Gets the name of the reviewer.
+     *
+     * @return The name of the reviewer.
+     */
+    public String getName() {
+        return Name;
+    }
 
-	public void setName(String name) {
-		Name = name;
-	}
+    /**
+     * Sets the name of the reviewer.
+     *
+     * @param name The name of the reviewer.
+     */
+    public void setName(String name) {
+        Name = name;
+    }
 
-	public String getEmail() {
-		return Email;
-	}
+    /**
+     * Gets the email of the reviewer.
+     *
+     * @return The email of the reviewer.
+     */
+    public String getEmail() {
+        return Email;
+    }
 
-	public void setEmail(String email) {
-		Email = email;
-	}
+    /**
+     * Sets the email of the reviewer.
+     *
+     * @param email The email of the reviewer.
+     */
+    public void setEmail(String email) {
+        Email = email;
+    }
 
-	public String getExpertise() {
-		return Expertise;
-	}
+    /**
+     * Gets the expertise of the reviewer.
+     *
+     * @return The expertise of the reviewer.
+     */
+    public String getExpertise() {
+        return Expertise;
+    }
 
-	public void setExpertise(String expertise) {
-		Expertise = expertise;
-	}
+    /**
+     * Sets the expertise of the reviewer.
+     *
+     * @param expertise The expertise of the reviewer.
+     */
+    public void setExpertise(String expertise) {
+        Expertise = expertise;
+    }
 
-	public String getMobile() {
-		return Mobile;
-	}
+    /**
+     * Gets the mobile number of the reviewer.
+     *
+     * @return The mobile number of the reviewer.
+     */
+    public String getMobile() {
+        return Mobile;
+    }
 
-	public void setMobile(String mobile) {
-		Mobile = mobile;
-	}
+    /**
+     * Sets the mobile number of the reviewer.
+     *
+     * @param mobile The mobile number of the reviewer.
+     */
+    public void setMobile(String mobile) {
+        Mobile = mobile;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    /**
+     * Gets the unique identifier (ID) of the reviewer.
+     *
+     * @return The ID of the reviewer.
+     */
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+    /**
+     * Sets the unique identifier (ID) of the reviewer.
+     *
+     * @param id The ID of the reviewer.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     // Constructors, getters, and setters
 }
