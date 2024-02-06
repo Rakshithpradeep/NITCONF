@@ -23,6 +23,7 @@ public class Reviewer {
     private String Email;
     private String Expertise;
     private String Mobile;
+    private String PapersCount;
 
     /**
      * Gets the name of the reviewer.
@@ -113,6 +114,14 @@ public class Reviewer {
     public void setId(Long id) {
         this.id = id;
     }
+
+	public String getPapersCount() {
+		return PapersCount;
+	}
+
+	public void setPapersCount(String papersCount) {
+		PapersCount = papersCount;
+	}
 
     // Constructors, getters, and setters
 }
