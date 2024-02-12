@@ -21,7 +21,7 @@ public class Reviewer {
 
     private String Name;
     private String Email;
-    private String Expertise;
+    private String expertise;
     private String Mobile;
     private String PapersCount;
 
@@ -61,23 +61,7 @@ public class Reviewer {
         Email = email;
     }
 
-    /**
-     * Gets the expertise of the reviewer.
-     *
-     * @return The expertise of the reviewer.
-     */
-    public String getExpertise() {
-        return Expertise;
-    }
-
-    /**
-     * Sets the expertise of the reviewer.
-     *
-     * @param expertise The expertise of the reviewer.
-     */
-    public void setExpertise(String expertise) {
-        Expertise = expertise;
-    }
+    
 
     /**
      * Gets the mobile number of the reviewer.
@@ -121,6 +105,14 @@ public class Reviewer {
 
 	public void setPapersCount(String papersCount) {
 		PapersCount = papersCount;
+	}
+
+	public String getExpertise() {
+		return expertise;
+	}
+
+	public void setExpertise(String expertise) {
+		expertise = expertise;
 	}
 
     // Constructors, getters, and setters

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pc.Model.Reviewer;
 import pc.Service.ReviewersService;
@@ -26,10 +27,16 @@ public class ReviewersController {
      * @return The view name for the reviewers page.
      */
     @GetMapping("/reviewers")
-    public String getAllReviewers(Model model) {
-        // Retrieve the list of reviewers from the service
-        List<Reviewer> reviewersList = reviewersService.getAllReviewers();
+    public String getAllReviewers(@RequestParam(required = false) String expertiseFilter,Model model) {
+    	 List<Reviewer> reviewersList;
 
+    	    if (expertiseFilter != null && !expertiseFilter.isEmpty()) {
+    	        // If expertiseFilter is provided, filter reviewers by expertise
+    	        reviewersList = reviewersService.getReviewersByExpertise(expertiseFilter);
+    	    } else {
+    	        // Otherwise, get all reviewers
+    	        reviewersList = reviewersService.getAllReviewers();
+    	    }
         // Add the list of reviewers to the model
         model.addAttribute("reviewersList", reviewersList);
 
@@ -38,28 +45,6 @@ public class ReviewersController {
     }
 }
 
-/*
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import pc.Model.Reviewer;
-import pc.Service.ReviewersService;
-
-import java.util.List;
-
-@RestController
-@RequestMapping("/reviewers")
-public class ReviewersController {
-    @Autowired
-    private ReviewersService reviewerService;
-
-    @GetMapping
-    public List<Reviewer> getAllReviewers() {
-        return reviewerService.getAllReviewers();
-    }
-}*/
 
 
 

@@ -274,6 +274,12 @@
     <main>
         <div class="dashboard-container">
             <h2 style="color: #3498db;">Reviewers</h2>
+		        <!-- Filter button and input field -->
+		    <div>
+		        <label for="expertiseFilter">Filter by Expertise:</label>
+		        <input type="text" id="expertiseFilter" placeholder="Enter expertise...">
+		        <button onclick="filterByExpertise()">Filter</button>
+		    </div>
                 <!-- Displaying Reviewers Table -->
             <table>
                
@@ -378,6 +384,26 @@
         function closePopup(popupId) {
             var popup = document.getElementById(popupId);
             popup.style.display = 'none';
+        }
+        
+        function filterByExpertise() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("expertiseFilter");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2]; // Index 2 represents the Expertise column
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
         }
     </script>
 </body>
