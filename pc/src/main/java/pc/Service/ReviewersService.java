@@ -25,4 +25,8 @@ public class ReviewersService {
     public List<Reviewer> getAllReviewers() {
         return reviewerRepository.findAll();
     }
+    public List<Reviewer> getReviewersByExpertise(String expertise) {
+        return reviewerRepository.findByExpertise(expertise);
+    }
+
 }
