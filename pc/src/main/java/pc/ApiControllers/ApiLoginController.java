@@ -1,4 +1,5 @@
-package pc.Controller;
+package pc.ApiControllers;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controller class for handling login-related requests.
  */
-@Controller
-@RequestMapping("/")
-public class LoginController {
+@RestController
+@RequestMapping("/api/")
+public class ApiLoginController {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoginController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ApiLoginController.class);
 
     /**
      * Handles the GET request for "/login" endpoint.

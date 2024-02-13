@@ -1,4 +1,4 @@
-package pc.Controller;
+package pc.ApiControllers;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import pc.Service.ReviewersService;
 /**
  * Controller class for handling requests related to reviewers.
  */
-@Controller
-public class ReviewersController {
+@RestController
+public class ApiReviewerController {
 
     @Autowired
     private ReviewersService reviewersService;
@@ -29,8 +29,8 @@ public class ReviewersController {
      * @param model The Spring MVC model.
      * @return The view name for the reviewers page.
      */
-    @GetMapping("/reviewers")
-    public  String getAllReviewers(@RequestParam(required = false) String expertiseFilter,Model model) {
+    @GetMapping("/api/reviewers")
+    public  ResponseEntity<List<Reviewer>> getAllReviewers(@RequestParam(required = false) String expertiseFilter) {
     	 List<Reviewer> reviewersList;
 
     	    if (expertiseFilter != null && !expertiseFilter.isEmpty()) {
@@ -41,11 +41,11 @@ public class ReviewersController {
     	        reviewersList = reviewersService.getAllReviewers();
     	    }
         // Add the list of reviewers to the model
-        model.addAttribute("reviewersList", reviewersList);
+        //model.addAttribute("reviewersList", reviewersList);
 
         // Return the view name for the reviewers page
-        return "reviewers";
-        //return new ResponseEntity<>(reviewersList, HttpStatus.OK);
+       // return "reviewers";
+        return new ResponseEntity<>(reviewersList, HttpStatus.OK);
     }
 }
 
