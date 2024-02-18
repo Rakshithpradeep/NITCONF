@@ -55,4 +55,18 @@ public class UnReviewedPapersController {
         paperRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+    @PostMapping("/assign-reviewer")
+    public ResponseEntity<String> assignReviewer(@RequestParam String title,
+                                                 @RequestParam String author,
+                                                 @RequestParam String assignedReviewer) {
+    	UnReviewedPapers paper = paperRepository.findByTitleAndAuthor(title, author);
+        if (paper == null) {
+            return ResponseEntity.notFound().build();
+        }
+        paper.setReviewer(assignedReviewer);
+        paperRepository.save(paper);
+        return ResponseEntity.ok("Reviewer assigned successfully");
+    }
+    
 }
