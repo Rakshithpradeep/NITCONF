@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">n">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
@@ -266,7 +266,8 @@
         <a th:href="@{/unreviewedpapers}"><span class="icon">&#128190;</span> Unreviewed Papers</a>
         <a th:href="@{/acceptedpapers}"><span class="icon">&#128221;</span> Accepted Papers</a>
         <a th:href="@{/rejectedpapers}"><span class="icon">&#128683;</span> Rejected Papers</a>
-        <a th:href="@{/logout}" value="Logout" class="logout-icon">&#128075;</span> LogOut</a>
+       <a th:href="@{/logout}" class="logout-icon"><span>&#128075;</span> Logout</a>
+
         <a href="#" onclick="closeMenu()" class="back-icon">&#8592;<i class=""></i> </a>
 
     </nav>
@@ -276,6 +277,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Title</th>
                         <th>Author</th>
                         <th>Abstract</th>
@@ -286,10 +288,12 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>1</td>
                         <td>Artificial Intelligence in Education</td>
                         <td>Hemanth</td>
                         <td class="abstract-link" onclick="showAbstract('Machine Learning in Healthcare', 'Hemanth', 'largepreview.png')">View Abstract</td>
                          <td class="assign-reviewers-link" onclick="assignReviewers('Artificial Intelligence in Education', 'Hemanth')">   <select id="expertise" name="expertise"  style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
+              <option>None</option>
               <option value="frontend">avinash</option>
               <option value="backend">vinay</option>
               <option value="fullstack">abhiram</option>
@@ -297,12 +301,14 @@
           </select></td>
                     </tr>
                     <tr>
+                        <td>2</td>
                         <td>Blockchain Technology in Finance</td>
                         <td>Deekshitha</td>
                         <td class="abstract-link" onclick="showAbstract('Data Visualization Techniques', 'Deekshitha', 'largepreview (1).png')">View
                             Abstract</td>
                         <td class="assign-reviewers-link" onclick="assignReviewers('Blockchain Technology in Finance', 'Deekshitha')">
               <select id="expertise" name="expertise" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
+                <option>None</option>
                 <option value="frontend">naveen</option>
                 <option value="backend">siri</option>
                 <option value="fullstack">afra</option>
@@ -375,6 +381,36 @@
 
             abstractPopup.style.display = 'flex';
         }
+        
+    function assignReviewers(paperTitle, author) {
+    var selectedReviewer = document.querySelector('#expertise').value;
+
+    // Create a JSON object with the data to send
+    var data = {
+        paperTitle: paperTitle,
+        author: author,
+        selectedReviewer: selectedReviewer
+    };
+
+    // Send a POST request to the backend
+    fetch('/assign-reviewer', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Reviewer assigned successfully');
+        } else {
+            console.error('Error assigning reviewer');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
        
 
