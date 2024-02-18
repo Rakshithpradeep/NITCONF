@@ -64,7 +64,7 @@ public class UnReviewedPapersController {
         if (paper == null) {
             return ResponseEntity.notFound().build();
         }
-        paper.setReviewer(assignedReviewer);
+        paper.setAssignedReviewer(assignedReviewer);
         paperRepository.save(paper);
         return ResponseEntity.ok("Reviewer assigned successfully");
     }
