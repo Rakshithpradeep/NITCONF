@@ -1,1 +1,401 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Accepted Papers API
+  description: API for managing accepted papers
+basePath: /api
+tags:
+  - name: AcceptedPapers
+    description: Operations related to accepted papers
+    
+  - name: Dashboard
+    description: Contains the utilites required by the PC Member
+    
+  - name: Discussions
+    description: Operations related to send or receive messages among Members and Authors
+    
+  - name: EditProfile
+    description: Operations related to Editing profile of the User
+    
+  - name: Login
+    description: Operations related to user login
+    
+  - name: Logout
+    description: Operations related to user logout
+    
+  - name: Mail
+    description: Operations related to sending emails
+    
+  - name: Profile
+    description: Operations related to user profiles
+    
+  - name: RejectedPapers
+    description: Operations related to rejected papers
+    
+  - name: ReviewedPapers
+    description: Operations related to reviewed papers
+    
+  - name: Reviewers
+    description: Operations related to reviewers
+    
+  - name: UnReviewedPapers
+    description: Operations related to unreviewed papers
+    
+paths:
+  /acceptedpapers:
+    get:
+      tags:
+        - AcceptedPapers
+      summary: Get accepted papers
+      description: Retrieve a list of accepted papers
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: string
+          examples:
+            application/json: acceptedpapers
 
+  /dashboard:
+    get:
+      tags:
+        - Dashboard
+      summary: Get dashboard
+      description: Retrieve the dashboard page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+          
+  /discussions:
+    get:
+      tags:
+        - Discussions
+      summary: Get discussions
+      description: Retrieve the discussions page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+          
+  /editProfile:
+    get:
+      tags:
+        - EditProfile
+      summary: Show edit profile page
+      description: Retrieve the edit profile page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+    post:
+      tags:
+        - EditProfile
+      summary: Edit user profile
+      description: Update user profile details
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      parameters:
+        - in: body
+          name: user
+          description: Updated user object
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '302':
+          description: Redirect to profile page
+
+  
+  /login:
+    get:
+      tags:
+        - Login
+      summary: Show login page
+      description: Retrieve the login page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+    post:
+      tags:
+        - Login
+      summary: Login user
+      description: Authenticate user credentials and login
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          description: User credentials
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+      responses:
+        '200':
+          description: Successful login
+        '401':
+          description: Unauthorized
+          
+  /logout:
+    get:
+      tags:
+        - Logout
+      summary: Logout
+      description: Log out the user and redirect to the login page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation, login page returned
+          
+  /sendMail:
+    get:
+      tags:
+        - Mail
+      summary: Show sendMail page
+      description: Retrieve the sendMail page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+    post:
+      tags:
+        - Mail
+      summary: Send an email
+      description: Send an email using provided details
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      parameters:
+        - in: body
+          name: email
+          description: Email object containing email details
+          required: true
+          schema:
+            $ref: '#/definitions/Email'
+      responses:
+        '200':
+          description: Email sent successfully
+          
+  /profile:
+    get:
+      tags:
+        - Profile
+      summary: Show profile page
+      description: Retrieve the profile page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+          
+  /rejectedpapers:
+    get:
+      tags:
+        - RejectedPapers
+      summary: Show rejected papers page
+      description: Retrieve the rejected papers page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+  /reviewedpapers:
+    get:
+      tags:
+        - ReviewedPapers
+      summary: Show reviewed papers page
+      description: Retrieve the reviewed papers page
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Successful operation
+  /reviewers:
+    get:
+      tags:
+        - Reviewers
+      summary: Get all reviewers
+      description: Retrieve all reviewers or filter by expertise
+      produces:
+        - text/html
+      parameters:
+        - in: query
+          name: expertiseFilter
+          description: Filter reviewers by expertise
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+  /UnReviewedPapers:
+    get:
+      tags:
+        - UnReviewedPapers
+      summary: Get all unreviewed papers
+      description: Retrieve all unreviewed papers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+    post:
+      tags:
+        - UnReviewedPapers
+      summary: Create a new unreviewed paper
+      description: Create a new unreviewed paper
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: paper
+          description: UnReviewedPapers object
+          schema:
+            $ref: '#/definitions/UnReviewedPapers'
+      responses:
+        '201':
+          description: Paper created successfully
+  /UnReviewedPapers/{id}:
+    get:
+      tags:
+        - UnReviewedPapers
+      summary: Get unreviewed paper by ID
+      description: Retrieve an unreviewed paper by its ID
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: ID of the unreviewed paper to retrieve
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful operation
+        '404':
+          description: Paper not found
+    put:
+      tags:
+        - UnReviewedPapers
+      summary: Update unreviewed paper
+      description: Update an unreviewed paper by ID
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: ID of the unreviewed paper to update
+          required: true
+          type: integer
+        - in: body
+          name: paper
+          description: Updated UnReviewedPapers object
+          schema:
+            $ref: '#/definitions/UnReviewedPapers'
+      responses:
+        '200':
+          description: Paper updated successfully
+        '404':
+          description: Paper not found
+    delete:
+      tags:
+        - UnReviewedPapers
+      summary: Delete unreviewed paper
+      description: Delete an unreviewed paper by ID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the unreviewed paper to delete
+          required: true
+          type: integer
+      responses:
+        '204':
+          description: Paper deleted successfully
+        '404':
+          description: Paper not found
+  /UnReviewedPapers/assign-reviewer:
+    post:
+      tags:
+        - UnReviewedPapers
+      summary: Assign reviewer to unreviewed paper
+      description: Assign a reviewer to an unreviewed paper by title and author
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - text/plain
+      parameters:
+        - in: formData
+          name: title
+          description: Title of the unreviewed paper
+          required: true
+          type: string
+        - in: formData
+          name: author
+          description: Author of the unreviewed paper
+          required: true
+          type: string
+        - in: formData
+          name: assignedReviewer
+          description: Assigned reviewer for the unreviewed paper
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Reviewer assigned successfully
+        '404':
+          description: Paper not found
+definitions:
+  UnReviewedPapers:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      author:
+        type: string
+      assignedReviewer:
+        type: string
+
+  Email:
+    type: object
+    properties:
+      to:
+        type: string
+      subject:
+        type: string
+      body:
+        type: string
+
+  User:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      name:
+        type: string
+  
