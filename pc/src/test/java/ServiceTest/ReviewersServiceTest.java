@@ -44,16 +44,27 @@ public class ReviewersServiceTest {
 
     @Test
     public void testGetReviewersByExpertise() {
+        // arrange-Creating the mock data
         List<Reviewer> reviewers = new ArrayList<>();
-        reviewers.add(new Reviewer());
-        reviewers.add(new Reviewer());
+        Reviewer reviewer1 = new Reviewer();
+        reviewer1.setExpertise("Computer Science");
+        Reviewer reviewer2 = new Reviewer();
+        reviewer2.setExpertise("Computer Science");
+        reviewers.add(reviewer1);
+        reviewers.add(reviewer2);
         String expertise = "Computer Science";
         
+        // act-Mock repository behavior
         when(reviewerRepository.findByExpertise(expertise)).thenReturn(reviewers);
 
+        // Call the service method
         List<Reviewer> result = reviewersService.getReviewersByExpertise(expertise);
 
-        assertEquals(reviewers, result);
+        // Verify the result
+        assertEquals(reviewers.size(), result.size());
+        for (int i = 0; i < reviewers.size(); i++) {
+            assertEquals(reviewers.get(i), result.get(i));
+        }
     }
 
 }
