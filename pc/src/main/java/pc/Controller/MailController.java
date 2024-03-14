@@ -32,7 +32,7 @@ public class MailController {
 
     @PostMapping("/sendMail")
     public String sendEmail(@ModelAttribute("email") Email email) {
-        // Send the email 
+        // Send the email here
         emailService.sendMail(email);
         // Redirect to a success page or any other desired page
         return "discussions";
