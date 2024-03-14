@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Compose Email</title>
+</head>
+<body>
+    <h1>Compose Email</h1>
+    <form action="/send-email" method="post">
+        <input type="hidden" name="reviewerId" th:value="${reviewerId}" />
+        <label for="to">To:</label><br/>
+        <input type="text" id="to" name="to" th:value="${reviewerEmail}" readonly><br/> <!-- Display reviewer's email -->
+        <label for="subject">Subject:</label><br/>
+        <input type="text" id="subject" name="subject"><br/>
+        <label for="message">Message:</label><br/>
+        <textarea id="message" name="message"></textarea><br/>
+        <button type="submit">Send Email</button>
+    </form>
+</body>
+</html>

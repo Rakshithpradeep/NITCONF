@@ -1,33 +1,40 @@
 package pc.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import jakarta.servlet.http.HttpSession;
-
-import org.springframework.web.bind.annotation.ModelAttribute;
 import pc.Model.Email;
+import pc.Model.Reviewer;
 import pc.Service.EmailService;
+import pc.Service.ReviewersService;
 
 @Controller
 public class MailController {
 
-    private final EmailService emailService;
+    @Autowired
+    private ReviewersService reviewersService;
 
-    public MailController(EmailService emailService) {
-        this.emailService = emailService;
-    }
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/sendMail")
-    public String sendMailPage() {
+    public String showEmailForm(Model model) {
+        // Retrieve all reviewers briur9uo
+        model.addAttribute("reviewers", reviewersService.getAllReviewers());
+        // Initialize an empty Email object
+        model.addAttribute("email", new Email());
         return "sendMail";
     }
 
     @PostMapping("/sendMail")
-    public String sendMail(@ModelAttribute Email email, HttpSession session) {
+    public String sendEmail(@ModelAttribute("email") Email email) {
+        // Send the email 
         emailService.sendMail(email);
-        session.setAttribute("msg", "Email sent successfully");
-        return "sendMail";
+        // Redirect to a success page or any other desired page
+        return "discussions";
     }
 }
