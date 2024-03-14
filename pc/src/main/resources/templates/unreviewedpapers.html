@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">n">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
@@ -245,20 +245,20 @@
 
 <body>
 
-     <header>
+    <header>
         <div class="header-content">
             <input type="checkbox" id="menu-toggle">
             <label for="menu-toggle" id="menu-icon">&#9776;</label>
 
             <h1 class="hu">NITCONF</h1>
-            <div class="profile-section" >
+            <div class="profile-section">
                 <a th:href="@{/profile}"><span class="fa fa-user icon" style="font-size:24px;color:white"></span></a>
             </div>
         </div>
 
-     </header>
-     <nav>
-       <h2 class="navH">MENU</h2>
+    </header>
+    <nav>
+        <h2 class="navH">MENU</h2>
         <a th:href="@{/dashboard}"><span class="icon">&#127968;</span> Home</a>
         <a th:href="@{/reviewers}"><span class="icon">&#127991;</span> Reviewers</a>
         <a th:href="@{/discussions}"><span class="icon">&#128172;</span> Discussions</a>
@@ -266,7 +266,7 @@
         <a th:href="@{/unreviewedpapers}"><span class="icon">&#128190;</span> Unreviewed Papers</a>
         <a th:href="@{/acceptedpapers}"><span class="icon">&#128221;</span> Accepted Papers</a>
         <a th:href="@{/rejectedpapers}"><span class="icon">&#128683;</span> Rejected Papers</a>
-        <a th:href="@{/logout}" value="Logout" class="logout-icon">&#128075;</span> LogOut</a>
+        <a th:href="@{/logout}" value="Logout"><span> class="logout-icon">&#128075;</span> LogOut</a>
         <a href="#" onclick="closeMenu()" class="back-icon">&#8592;<i class=""></i> </a>
 
     </nav>
@@ -276,42 +276,63 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Title</th>
+                        <th>Topic</th>
                         <th>Author</th>
                         <th>Abstract</th>
+
                         <th>Assign Reviewers</th>
-                        
-                         
+
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>1</td>
                         <td>Artificial Intelligence in Education</td>
+                        <td>AI</td>
                         <td>Hemanth</td>
                         <td class="abstract-link" onclick="showAbstract('Machine Learning in Healthcare', 'Hemanth', 'largepreview.png')">View Abstract</td>
-                         <td class="assign-reviewers-link" onclick="assignReviewers('Artificial Intelligence in Education', 'Hemanth')">   <select id="expertise" name="expertise"  style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
-              <option value="frontend">avinash</option>
-              <option value="backend">vinay</option>
-              <option value="fullstack">abhiram</option>
-              <option value="designer">shraddha</option>
-          </select></td>
+                       <td class="assign-reviewers-link">
+    <select class="reviewers-select" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
+        <option value="none" selected>None</option>
+        <option value="avinash|Artificial Intelligence">Avinash</option>
+        <option value="vinay|Artificial Intelligence">Vinay</option>
+        <option value="abhiram|Blockchain Technology">Abhiram</option>
+        <option value="shraddha|Blockchain Technology">Shraddha</option>
+    </select>
+    <button class="add-reviewer-btn" onclick="addReviewer(this)">+</button>
+     <button class="add-reviewer-btn" onclick="assignReviewers('Artificial Intelligence in Education', 'Hemanth', this)">Assign Reviewers</button>
+</td>
                     </tr>
                     <tr>
+                        <td>2</td>
                         <td>Blockchain Technology in Finance</td>
+                        <td>BT</td>
                         <td>Deekshitha</td>
-                        <td class="abstract-link" onclick="showAbstract('Data Visualization Techniques', 'Deekshitha', 'largepreview (1).png')">View
-                            Abstract</td>
-                        <td class="assign-reviewers-link" onclick="assignReviewers('Blockchain Technology in Finance', 'Deekshitha')">
-              <select id="expertise" name="expertise" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
-                <option value="frontend">naveen</option>
-                <option value="backend">siri</option>
-                <option value="fullstack">afra</option>
-                <option value="designer">gayatri</option>
-            </select></td>
+                        <td class="abstract-link" onclick="showAbstract('Data Visualization Techniques', 'Deekshitha', 'largepreview (1).png')">View Abstract</td>
+                        <td class="assign-reviewers-link">
+    <select class="reviewers-select" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
+        <option value="none" selected>None</option>
+        <option value="avinash|Artificial Intelligence">Avinash</option>
+        <option value="vinay|Artificial Intelligence">Vinay</option>
+        <option value="abhiram|Blockchain Technology">Abhiram</option>
+        <option value="shraddha|Blockchain Technology">Shraddha</option>
+    </select>
+    <button class="add-reviewer-btn" onclick="addReviewer(this)">+</button>
+    <button class="add-reviewer-btn" onclick="assignReviewers('Artificial Intelligence in Education', 'Hemanth', this)">Assign Reviewers</button>
+
+</td>
                     </tr>
+
+
+
                     <!-- Add more rows with dummy information and abstract links as needed -->
                 </tbody>
             </table>
+            
+
 
             <!-- Abstract Popup -->
             <div id="abstractPopup" class="abstract-popup">
@@ -376,12 +397,80 @@
             abstractPopup.style.display = 'flex';
         }
 
-       
+
 
         function closePopup(popupId) {
             var popup = document.getElementById(popupId);
             popup.style.display = 'none';
         }
+
+      function addReviewer(button) {
+    var td = button.parentNode;
+    var select = td.querySelector('.reviewers-select');
+    var newSelect = select.cloneNode(true);
+    newSelect.selectedIndex = 0; // Reset selection to "None"
+    
+    // Remove previously selected options from the new dropdown
+    var selectedOptions = td.parentNode.querySelectorAll('.reviewers-select');
+    selectedOptions.forEach(function(option) {
+        newSelect.querySelectorAll('option[value="' + option.value + '"]').forEach(function(el) {
+            el.parentNode.removeChild(el);
+        });
+    });
+    
+    // If only "None" option remains, display a warning message instead of adding a new dropdown
+    if (newSelect.querySelectorAll('option').length === 1) {
+        alert("All reviewers have been assigned.");
+    } else {
+        td.insertBefore(newSelect, button);
+        button.style.display = "inline-block"; // Ensure the "+" button remains visible after adding a new dropdown
+    }
+}
+
+
+
+
+      function assignReviewers(title, author, button) {
+    var confirmation = confirm("Are you sure you want to assign these reviewers?");
+    if (confirmation) {
+        var td = button.parentNode;
+        var selects = td.querySelectorAll('.reviewers-select');
+        var reviewersTable = document.createElement('table');
+        reviewersTable.classList.add('reviewers-table');
+
+        var headerRow = reviewersTable.insertRow();
+        var headerCell = headerRow.insertCell();
+        headerCell.textContent = "Reviewer";
+        headerCell = headerRow.insertCell();
+        headerCell.textContent = "Expertise";
+
+        selects.forEach(function(select) {
+            if (select.value !== 'none') {
+                var reviewer = select.value.split('|')[0];
+                var topic = select.value.split('|')[1];
+                var row = reviewersTable.insertRow();
+                var cell = row.insertCell();
+                cell.textContent = reviewer;
+                cell = row.insertCell();
+                cell.textContent = topic;
+            }
+        });
+
+        // Replace the content in the "Assign Reviewers" column with the table
+        td.innerHTML = '';
+        td.appendChild(reviewersTable);
+
+        // Move the table row to the "Reviewed Papers" section after 10 seconds
+        setTimeout(function() {
+            var tr = td.parentNode;
+            tr.parentNode.removeChild(tr);
+            // Here you can add code to move the row to the "Reviewed Papers" section
+        }, 10000);
+    }
+}
+
+
+
     </script>
 </body>
 
