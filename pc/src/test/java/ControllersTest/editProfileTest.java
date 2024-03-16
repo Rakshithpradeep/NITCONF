@@ -31,7 +31,7 @@ public class editProfileTest {
     @Test
     public void testShowEditProfilePage() {
         // Mock data
-        User currentUser = new User("testUser", "password", "John Doe");
+        User currentUser = new User("rakshith", "password", "rakshith");
         when(userService.getCurrentUser()).thenReturn(currentUser);
 
         // Call controller method
