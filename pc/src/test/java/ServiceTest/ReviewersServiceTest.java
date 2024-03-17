@@ -1,16 +1,16 @@
 package ServiceTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pc.Data.ReviewersRepository;
 import pc.Model.Reviewer;
@@ -18,53 +18,82 @@ import pc.Service.ReviewersService;
 
 public class ReviewersServiceTest {
 
+    // Mock object for ReviewersRepository
     @Mock
-    private ReviewersRepository reviewerRepository;
+    private ReviewersRepository reviewersRepositoryMock;
 
+    // Injecting mocks into ReviewersService
     @InjectMocks
     private ReviewersService reviewersService;
 
+    // Initialization method to set up mock objects
     @BeforeEach
-    public void init() {
-        MockitoAnnotations.initMocks(this);
+    public void setup() {
+        MockitoAnnotations.initMocks(this); // Initialize mocks
     }
 
+    // Test method to verify fetching all reviewers
     @Test
     public void testGetAllReviewers() {
-        List<Reviewer> reviewers = new ArrayList<>();
-        reviewers.add(new Reviewer());
-        reviewers.add(new Reviewer());
+        // Arrange
+        List<Reviewer> expectedReviewers = new ArrayList<>();
+        expectedReviewers.add(createReviewer(1L, "John Doe", "john@example.com", "Expert A", "1234567890", "5"));
+        expectedReviewers.add(createReviewer(2L, "Jane Smith", "jane@example.com", "Expert B", "9876543210", "3"));
+        when(reviewersRepositoryMock.findAll()).thenReturn(expectedReviewers); // Stubbing repository method
 
-        when(reviewerRepository.findAll()).thenReturn(reviewers);
+        // Act
+        List<Reviewer> actualReviewers = reviewersService.getAllReviewers();
 
-        List<Reviewer> result = reviewersService.getAllReviewers();
-
-        assertEquals(reviewers, result);
-    }
-
-    @Test
-    public void testGetReviewersByExpertise() {
-        // arrange-Creating the mock data
-        List<Reviewer> reviewers = new ArrayList<>();
-        Reviewer reviewer1 = new Reviewer();
-        reviewer1.setExpertise("Computer Science");
-        Reviewer reviewer2 = new Reviewer();
-        reviewer2.setExpertise("Computer Science");
-        reviewers.add(reviewer1);
-        reviewers.add(reviewer2);
-        String expertise = "Computer Science";
-        
-        // act-Mock repository behavior
-        when(reviewerRepository.findByExpertise(expertise)).thenReturn(reviewers);
-
-        // Call the service method
-        List<Reviewer> result = reviewersService.getReviewersByExpertise(expertise);
-
-        // Verify the result
-        assertEquals(reviewers.size(), result.size());
-        for (int i = 0; i < reviewers.size(); i++) {
-            assertEquals(reviewers.get(i), result.get(i));
+        // Assert
+        assertEquals(expectedReviewers.size(), actualReviewers.size());
+        for (int i = 0; i < expectedReviewers.size(); i++) {
+            assertEquals(expectedReviewers.get(i), actualReviewers.get(i));
         }
     }
 
+    // Test method to verify fetching reviewers by expertise
+    @Test
+    public void testGetReviewersByExpertise() {
+        // Arrange
+        String expertise = "Expert A";
+        List<Reviewer> expectedReviewers = new ArrayList<>();
+        expectedReviewers.add(createReviewer(1L, "John Doe", "john@example.com", expertise, "1234567890", "5"));
+        expectedReviewers.add(createReviewer(1L, "John rao", "johnrao@example.com", expertise, "1234567890", "2"));
+        when(reviewersRepositoryMock.findByExpertise(expertise)).thenReturn(expectedReviewers); // Stubbing repository method
+
+        // Act
+        List<Reviewer> actualReviewers = reviewersService.getReviewersByExpertise(expertise);
+
+        // Assert
+        assertEquals(expectedReviewers.size(), actualReviewers.size());
+        for (int i = 0; i < expectedReviewers.size(); i++) {
+            assertEquals(expectedReviewers.get(i), actualReviewers.get(i));
+        }
+    }
+    
+    // Test method to verify fetching reviewers by invalid expertise
+    @Test
+    public void testGetReviewersByInvalidExpertise() {
+        // Arrange
+        String invalidExpertise = "Invalid Expertise";
+        when(reviewersRepositoryMock.findByExpertise(invalidExpertise)).thenReturn(new ArrayList<>()); // Stubbing repository method
+
+        // Act
+        List<Reviewer> actualReviewers = reviewersService.getReviewersByExpertise(invalidExpertise);
+
+        // Assert
+        assertEquals(0, actualReviewers.size());
+    }
+
+    // Helper method to create Reviewer objects
+    private Reviewer createReviewer(Long id, String name, String email, String expertise, String mobile, String papersCount) {
+        Reviewer reviewer = new Reviewer();
+        reviewer.setId(id);
+        reviewer.setName(name);
+        reviewer.setEmail(email);
+        reviewer.setExpertise(expertise);
+        reviewer.setMobile(mobile);
+        reviewer.setPapersCount(papersCount);
+        return reviewer;
+    }
 }
