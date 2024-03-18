@@ -6,7 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+import jakarta.persistence.*;
+import java.util.Set;
 /**
  * Entity class representing a reviewer.
  */
@@ -24,6 +25,15 @@ public class Reviewer {
     private String expertise;
     private String Mobile;
     private String PapersCount;
+
+    
+    @ManyToMany
+    @JoinTable(
+        name = "reviewer_paper",
+        joinColumns = @JoinColumn(name = "reviewer_id"),
+        inverseJoinColumns = @JoinColumn(name = "paper_id")
+    )
+    private Set<Paper> papers;
 
     /**
      * Gets the name of the reviewer.
