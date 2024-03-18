@@ -11,53 +11,46 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig{
-	
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
-	@Bean 
-	PasswordEncoder passwordEncoder()     
-	{   
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Bean
-	AuthenticationProvider authenticationprovider()
-	{
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		
-		provider.setUserDetailsService(userDetailsService);
-		provider.setPasswordEncoder(new BCryptPasswordEncoder());
-		
-		return provider;
-		
-		
-	}
-	
+public class SecurityConfig {
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {    
-		http
-			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/").permitAll()
-				.anyRequest().authenticated()
-			)
-			.formLogin((form) -> form
-				.loginPage("/login")
-				.permitAll()
-				.defaultSuccessUrl("/dashboard", true)
-			)
-			.logout((logout) -> logout.permitAll());
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-		
-		return http.build();
-	}
-	
-	
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+
+        return provider;
+    }
+
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests((requests) -> requests
+                .requestMatchers("/", "/login", "/csrf").permitAll() // Allow access to these endpoints without authentication
+                .anyRequest().authenticated()
+            )
+            .formLogin((form) -> form
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/dashboard", true)
+            )
+            .logout((logout) -> logout.permitAll())
+            .csrf((csrf) -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())); // Enable CSRF protection with HTTP-only cookie
+
+        return http.build();
+    }
 }
-
