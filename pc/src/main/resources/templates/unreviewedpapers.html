@@ -1,9 +1,123 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unreviewed Papers</title>
+</head>
+<body>
+    <h1>Unreviewed Papers</h1>
+    <div id="unreviewed-papers"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/unreviewedpapers')
+                .then(response => response.json())
+                .then(papers => {
+                    const papersContainer = document.getElementById('unreviewed-papers');
+                    papers.forEach(paper => {
+                        const paperElement = document.createElement('div');
+                        paperElement.innerHTML = `
+                            <h2>${paper.title}</h2>
+                            <p><strong>Author:</strong> ${paper.author}</p>
+                            <p><strong>Link:</strong> <a href="${paper.link}">${paper.link}</a></p>
+                            <p><strong>Comments:</strong> ${paper.comments}</p>
+                            <button onclick="assignReviewers(${paper.id})">Assign Reviewers</button>
+                            <hr>
+                        `;
+                        papersContainer.appendChild(paperElement);
+                    });
+                });
+        });
+
+        function assignReviewers(paperId) {
+            const reviewerIds = [1, 2, 3]; // Sample reviewer IDs, replace with actual logic to fetch reviewer IDs
+            fetch('/unreviewedpapers/assignreviewers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    paperId: paperId,
+                    reviewerIds: reviewerIds
+                })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Reviewers assigned successfully.');
+                } else {
+                    alert('Error assigning reviewers.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>-->
+
+<!-- Abstract Popup
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unreviewed Papers</title>
+</head>
+<body>
+    <h1>Unreviewed Papers</h1>
+    <div id="unreviewed-papers"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/unreviewedpapers')
+                .then(response => response.json())
+                .then(papers => {
+                    const papersContainer = document.getElementById('unreviewed-papers');
+                    papers.forEach(paper => {
+                        const paperElement = document.createElement('div');
+                        paperElement.innerHTML = `
+                            <h2>${paper.title}</h2>
+                            <p><strong>Author:</strong> ${paper.author}</p>
+                            <p><strong>Link:</strong> <a href="${paper.link}">${paper.link}</a></p>
+                            <p><strong>Comments:</strong> ${paper.comments}</p>
+                            <button onclick="assignReviewers(${paper.id})">Assign Reviewers</button>
+                            <hr>
+                        `;
+                        papersContainer.appendChild(paperElement);
+                    });
+                });
+        });
+
+        function assignReviewers(paperId) {
+            const reviewerIds = [1, 2, 3]; // Sample reviewer IDs, replace with actual logic to fetch reviewer IDs
+            fetch('/unreviewedpapers/assignreviewers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    paperId: paperId,
+                    reviewerIds: reviewerIds
+                })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Reviewers assigned successfully.');
+                } else {
+                    alert('Error assigning reviewers.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>Abstract Popup -->
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-KyZXEAg3QhqLMpMIHdGQ8tNqQJ2z9qgx4lUAf3/70p5p1K6L6p61Upc9lEmntqXuSgyjgTFPKvmqD2U6u3/eGg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -263,7 +377,7 @@
         <a th:href="@{/reviewers}"><span class="icon">&#127991;</span> Reviewers</a>
         <a th:href="@{/discussions}"><span class="icon">&#128172;</span> Discussions</a>
         <a th:href="@{/reviewedpapers}"><span class="icon">&#128195;</span> Reviewed Papers</a>
-        <a th:href="@{/unreviewedpapers}"><span class="icon">&#128190;</span> Unreviewed Papers</a>
+        <a th:href="@{/unreviewedpapers}"><span class="icon">&#128190;</span> UnreviewedPapers</a>
         <a th:href="@{/acceptedpapers}"><span class="icon">&#128221;</span> Accepted Papers</a>
         <a th:href="@{/rejectedpapers}"><span class="icon">&#128683;</span> Rejected Papers</a>
         <a th:href="@{/logout}" value="Logout"><span> class="logout-icon">&#128075;</span> LogOut</a>
@@ -288,44 +402,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Artificial Intelligence in Education</td>
-                        <td>AI</td>
-                        <td>Hemanth</td>
-                        <td class="abstract-link" onclick="showAbstract('Machine Learning in Healthcare', 'Hemanth', 'largepreview.png')">View Abstract</td>
+                    <tr th:each="papers: ${unreviewedPapers}">
+                        <td th:text="${papers.id}"></td>
+                        <td th:text="${papers.title}"></td>
+                        <td th:text="${papers.expertise}"></td>
+                        <td th:text="${papers.author}"></td>
+                        <td >
+   							 <a class="abstract-link" th:href="${papers.link}" target="_blank">View PDF</a>
+						</td>
+
+                        
                        <td class="assign-reviewers-link">
     <select class="reviewers-select" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
-        <option value="none" selected>None</option>
-        <option value="avinash|Artificial Intelligence">Avinash</option>
-        <option value="vinay|Artificial Intelligence">Vinay</option>
-        <option value="abhiram|Blockchain Technology">Abhiram</option>
-        <option value="shraddha|Blockchain Technology">Shraddha</option>
-    </select>
+    <option value="none" selected>None</option>
+    <option th:each="reviewer : ${reviewersList}" th:if="${reviewer.expertise == papers.expertise}" th:value="${reviewer.id}" th:text="${reviewer.name + '|' + reviewer.expertise}"></option>
+</select>
+
     <button class="add-reviewer-btn" onclick="addReviewer(this)">+</button>
-     <button class="add-reviewer-btn" onclick="assignReviewers('Artificial Intelligence in Education', 'Hemanth', this)">Assign Reviewers</button>
+     <button class="add-reviewer-btn" th:attr="onclick='assignReviewers(\'' + ${papers.id} + '\', this)'">Assign Reviewers</button>
 </td>
-                    </tr>
+
+                        
                     <tr>
-                        <td>2</td>
-                        <td>Blockchain Technology in Finance</td>
-                        <td>BT</td>
-                        <td>Deekshitha</td>
-                        <td class="abstract-link" onclick="showAbstract('Data Visualization Techniques', 'Deekshitha', 'largepreview (1).png')">View Abstract</td>
-                        <td class="assign-reviewers-link">
-    <select class="reviewers-select" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
-        <option value="none" selected>None</option>
-        <option value="avinash|Artificial Intelligence">Avinash</option>
-        <option value="vinay|Artificial Intelligence">Vinay</option>
-        <option value="abhiram|Blockchain Technology">Abhiram</option>
-        <option value="shraddha|Blockchain Technology">Shraddha</option>
-    </select>
-    <button class="add-reviewer-btn" onclick="addReviewer(this)">+</button>
-    <button class="add-reviewer-btn" onclick="assignReviewers('Artificial Intelligence in Education', 'Hemanth', this)">Assign Reviewers</button>
-
-</td>
-                    </tr>
-
 
 
                     <!-- Add more rows with dummy information and abstract links as needed -->
@@ -355,7 +453,9 @@
         </div>
     </main>
 
-    <script>
+    <script th:inline="javascript">
+    var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
         const menuIcon = document.getElementById('menu-icon');
         const menuToggle = document.getElementById('menu-toggle');
         const mainContent = document.querySelector('main');
@@ -430,44 +530,90 @@
 
 
 
-      function assignReviewers(title, author, button) {
-    var confirmation = confirm("Are you sure you want to assign these reviewers?");
-    if (confirmation) {
-        var td = button.parentNode;
-        var selects = td.querySelectorAll('.reviewers-select');
-        var reviewersTable = document.createElement('table');
-        reviewersTable.classList.add('reviewers-table');
+      function assignReviewers(id, button) {
+    	    var td = button.parentNode;
+    	    var selects = td.querySelectorAll('.reviewers-select');
 
-        var headerRow = reviewersTable.insertRow();
-        var headerCell = headerRow.insertCell();
-        headerCell.textContent = "Reviewer";
-        headerCell = headerRow.insertCell();
-        headerCell.textContent = "Expertise";
+    	    // Check if any reviewers are selected
+    	    var reviewersSelected = false;
+    	    var reviewerIds = [];
+    	    selects.forEach(function(select) {
+    	        if (select.value !== 'none') {
+    	            reviewersSelected = true;
+    	            reviewerIds.push(select.value);
+    	        }
+    	    });
 
-        selects.forEach(function(select) {
-            if (select.value !== 'none') {
-                var reviewer = select.value.split('|')[0];
-                var topic = select.value.split('|')[1];
-                var row = reviewersTable.insertRow();
-                var cell = row.insertCell();
-                cell.textContent = reviewer;
-                cell = row.insertCell();
-                cell.textContent = topic;
-            }
-        });
+    	    if (!reviewersSelected) {
+    	        alert("Please assign reviewers.");
+    	        return; // Exit function if no reviewers are selected
+    	    }
 
-        // Replace the content in the "Assign Reviewers" column with the table
-        td.innerHTML = '';
-        td.appendChild(reviewersTable);
+    	    var confirmation = confirm("Are you sure you want to assign these reviewers?");
+    	    if (confirmation) {
+    	        // Construct the data object to send to the backend
+    	        var data = {
+    	            paperId: id, // Include the paper ID
+    	            reviewerIds: reviewerIds // Include the selected reviewer IDs
+    	        };
 
-        // Move the table row to the "Reviewed Papers" section after 10 seconds
-        setTimeout(function() {
-            var tr = td.parentNode;
-            tr.parentNode.removeChild(tr);
-            // Here you can add code to move the row to the "Reviewed Papers" section
-        }, 10000);
-    }
-}
+    	        // Send data to the backend (you'll need to replace the URL and method with your backend endpoint)
+    	        // Example AJAX request:
+    	        
+    	        fetch('/papers/' + id + '/reviewed', {
+    	            method: 'PUT',
+    	            headers: {
+    	                'Content-Type': 'application/json',
+    	                [csrfHeader]: csrfToken
+    	            },
+    	            body: JSON.stringify(data)
+    	        })
+    	        .then(response => {
+    	            if (!response.ok) {
+    	                throw new Error('Network response was not ok');
+    	            }
+    	            // Handle successful response
+    	        })
+    	        .catch(error => {
+    	            console.error('There was a problem with the fetch operation:', error);
+    	        });
+    	        
+
+    	        var reviewersTable = document.createElement('table');
+    	        reviewersTable.classList.add('reviewers-table');
+
+    	        var headerRow = reviewersTable.insertRow();
+    	        var headerCell = headerRow.insertCell();
+    	        headerCell.textContent = "Reviewer";
+    	        headerCell = headerRow.insertCell();
+    	        headerCell.textContent = "Expertise";
+
+    	        selects.forEach(function(select) {
+    	            if (select.value !== 'none') {
+    	                var reviewer = select.options[select.selectedIndex].text.split('|')[0];
+    	                var topic = select.options[select.selectedIndex].text.split('|')[1];
+    	                var row = reviewersTable.insertRow();
+    	                var cell = row.insertCell();
+    	                cell.textContent = reviewer;
+    	                cell = row.insertCell();
+    	                cell.textContent = topic;
+    	            }
+    	        });
+
+    	        // Replace the content in the "Assign Reviewers" column with the table
+    	        td.innerHTML = '';
+    	        td.appendChild(reviewersTable);
+
+    	        // Move the table row to the "Reviewed Papers" section after 10 seconds
+    	        setTimeout(function() {
+    	            var tr = td.parentNode;
+    	            tr.parentNode.removeChild(tr);
+    	            // Here you can add code to move the row to the "Reviewed Papers" section
+    	        }, 10000);
+    	    }
+    	}
+
+
 
 
 
