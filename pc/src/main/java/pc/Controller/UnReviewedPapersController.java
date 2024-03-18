@@ -1,58 +1,86 @@
 package pc.Controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin; // Import CrossOrigin annotation
 
-import pc.Data.UnReviewedPapersRepository;
-import pc.Model.UnReviewedPapers;
+import pc.Model.Paper;
+import pc.Service.PaperService;
+import pc.Service.ReviewersService;
+import pc.Data.PaperRepository;
+import pc.Model.Reviewer; // Import Reviewer model
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
-@RestController
-@RequestMapping("/UnReviewedPapers")
+/**
+ * Controller class for handling requests related to reviewed papers.
+ */
+@Controller
 public class UnReviewedPapersController {
-    
-	
+
     @Autowired
-    private UnReviewedPapersRepository paperRepository;
+    private PaperService paperService;
+    
+    @Autowired
+    private PaperRepository paperRepository;
 
-    @GetMapping("/")
-    public ResponseEntity<List<UnReviewedPapers>> getAllPapers() {
-        List<UnReviewedPapers> papers = paperRepository.findAll();
-        return new ResponseEntity<>(papers, HttpStatus.OK);
+    @Autowired
+    private ReviewersService reviewersService; // Inject ReviewersService
+
+    /**
+     * Handles the GET request for "/unreviewedpapers" endpoint.
+     *
+     * @param model The model to add attributes for rendering in the view.
+     * @return The view name for the reviewed papers page.
+     */
+    @GetMapping("/unreviewedpapers")
+    public String getAllPapers(Model model) {
+        // Retrieve all unreviewed papers from the database
+    	System.out.println("hell0");
+        List<Paper> unreviewedPapers = paperService.getPapersByStatus("unreviewed");
+
+        // Retrieve all reviewers
+        List<Reviewer> reviewersList = reviewersService.getAllReviewers();
+
+        // Add the list of unreviewed papers to the model
+        model.addAttribute("unreviewedPapers", unreviewedPapers);
+        
+        // Add the list of reviewers to the model
+        model.addAttribute("reviewersList", reviewersList);
+
+        // Return the view name for the unreviewed papers page
+        return "unreviewedpapers";
     }
+    
+   
+    @PutMapping("/papers/{id}/reviewed")
+    @CrossOrigin // Add CrossOrigin annotation to allow requests from different origins
+    @ResponseBody
+    public ResponseEntity<String> markPaperAsReviewed(@PathVariable("id") Long id) {
+        // Find the paper by its ID
+        Paper paper = paperRepository.findById(id).orElse(null);
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UnReviewedPapers> getPaperById(@PathVariable("id") Long id) {
-        Optional<UnReviewedPapers> paperOptional = paperRepository.findById(id);
-        return paperOptional.map(paper -> new ResponseEntity<>(paper, HttpStatus.OK))
-                             .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @PostMapping("/")
-    public ResponseEntity<UnReviewedPapers> createPaper(@RequestBody UnReviewedPapers paper) {
-    	UnReviewedPapers savedPaper = paperRepository.save(paper);
-        return new ResponseEntity<>(savedPaper, HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UnReviewedPapers> updatePaper(@PathVariable("id") Long id, @RequestBody UnReviewedPapers paper) {
-        if (!paperRepository.existsById(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (paper == null) {
+            // If paper not found, return 404 Not Found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paper not found with ID: " + id);
         }
-        paper.setId(id);
-        UnReviewedPapers updatedPaper = paperRepository.save(paper);
-        return new ResponseEntity<>(updatedPaper, HttpStatus.OK);
-    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePaper(@PathVariable("id") Long id) {
-        if (!paperRepository.existsById(id)) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        paperRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        // Update the status of the paper to "reviewed"
+        paper.setStatus("reviewed");
+        paperRepository.save(paper);
+
+        // Return a success message
+        return ResponseEntity.ok("Paper with ID " + id + " marked as reviewed.");
     }
 }
