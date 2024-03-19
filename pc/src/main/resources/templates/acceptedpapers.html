@@ -276,28 +276,27 @@
             <table>
                 <thead>
                     <tr>
+                    	<th>Id</th>
                         <th>Title</th>
                         <th>Author</th>
                         <th>Abstract</th>
                         <th>View Comments</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Machine Learning in Healthcare</td>
-                        <td>Hemanth</td>
-                        <td class="abstract-link" onclick="showAbstract('Machine Learning in Healthcare', 'Hemanth', 'largepreview.png')">View Abstract</td>
-                        <td class="comments-link" onclick="showComments('Machine Learning in Healthcare', 'Hemanth')">View Comments</td>
-                    </tr>
-                    <tr>
-                        <td>Data Visualization Techniques</td>
-                        <td>Deekshitha</td>
-                        <td class="abstract-link" onclick="showAbstract('Data Visualization Techniques', 'Deekshitha', 'largepreview (1).png')">View
-                            Abstract</td>
-                        <td class="comments-link" onclick="showComments('Data Visualization Techniques', 'Deekshitha')">View Comments</td>
-                    </tr>
-                    <!-- Add more rows with dummy information and abstract links as needed -->
-                </tbody>
+    <tr th:each="paper : ${acceptedPapers}">
+    	<td th:text="${paper.id}"></td>
+        <td th:text="${paper.title}"></td>
+        <td th:text="${paper.author}"></td>
+         <td >
+   							 <a class="abstract-link" th:href="${paper.link}" target="_blank">View PDF</a>
+		</td>
+        <td class="comments-link" onclick="showComments('${paper.title}', '${paper.author}')">View Comments</td>
+        
+
+    </tr>
+</tbody>
             </table>
 
             <!-- Abstract Popup -->
