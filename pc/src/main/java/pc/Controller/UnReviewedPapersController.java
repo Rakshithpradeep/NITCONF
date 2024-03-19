@@ -63,7 +63,7 @@ public class UnReviewedPapersController {
         return "unreviewedpapers";
     }
     
-   
+   //ASSIGNING REVIEWERS TO THE PAPERS
     @PutMapping("/papers/{id}/reviewed")
     @CrossOrigin // Add CrossOrigin annotation to allow requests from different origins
     @ResponseBody
