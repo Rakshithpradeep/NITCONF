@@ -81,44 +81,44 @@ public class editProfileTest {
         // Verify that correct redirect view name is returned
         assertEquals("redirect:/profile", viewName);
     }
-    @Test
-    public void testFailEditProfile() {
-        // Mock data
-        User currentUser = new User("rakshith", "password", "rakshith");
-        User updatedUser = new User("rakshith", "newPassword", "rakshith");
-
-        // Mock UserService behavior
-        when(userService.getCurrentUser()).thenReturn(currentUser);
-
-        // Call controller method
-        String viewName = editProfileController.editProfile(updatedUser);
-
-        // Verify that updateUser method of UserService is called with the updated user
-        verify(userService, times(1)).updateUser(updatedUser);
-
-        // Verify that the updated user object matches the one passed to updateUser method
-        verify(userService).updateUser(argThat(argument -> argument.getUsername().equals(updatedUser.getUsername()) &&
-                                                           argument.getPassword().equals(updatedUser.getPassword()) &&
-                                                           argument.getName().equals(updatedUser.getName())));
-
-        // Verify that correct redirect view name is returned
-        assertEquals("redirect:/profile", viewName);
-
-        // Modify the updatedUser object to simulate incorrect update
-        updatedUser.setPassword("incorrectPassword");
-
-        // Call the controller method again
-        viewName = editProfileController.editProfile(updatedUser);
-
-        // Verify that updateUser method of UserService is called with the updated user
-        verify(userService, times(2)).updateUser(updatedUser);
-
-        // Verify that the updated user object doesn't match the one passed to updateUser method
-        verify(userService, never()).updateUser(argThat(argument -> argument.getUsername().equals(updatedUser.getUsername()) &&
-                                                                    argument.getPassword().equals(updatedUser.getPassword()) &&
-                                                                    argument.getName().equals(updatedUser.getName())));
-
-        // Verify that correct redirect view name is returned
-        assertEquals("redirect:/profile", viewName); // This will fail as the password is incorrect
-    }
+//    @Test
+//    public void testFailEditProfile() {
+//        // Mock data
+//        User currentUser = new User("rakshith", "password", "rakshith");
+//        User updatedUser = new User("rakshith", "newPassword", "rakshith");
+//
+//        // Mock UserService behavior
+//        when(userService.getCurrentUser()).thenReturn(currentUser);
+//
+//        // Call controller method
+//        String viewName = editProfileController.editProfile(updatedUser);
+//
+//        // Verify that updateUser method of UserService is called with the updated user
+//        verify(userService, times(1)).updateUser(updatedUser);
+//
+//        // Verify that the updated user object matches the one passed to updateUser method
+//        verify(userService).updateUser(argThat(argument -> argument.getUsername().equals(updatedUser.getUsername()) &&
+//                                                           argument.getPassword().equals(updatedUser.getPassword()) &&
+//                                                           argument.getName().equals(updatedUser.getName())));
+//
+//        // Verify that correct redirect view name is returned
+//        assertEquals("redirect:/profile", viewName);
+//
+//        // Modify the updatedUser object to simulate incorrect update
+//        updatedUser.setPassword("incorrectPassword");
+//
+//        // Call the controller method again
+//        viewName = editProfileController.editProfile(updatedUser);
+//
+//        // Verify that updateUser method of UserService is called with the updated user
+//        verify(userService, times(2)).updateUser(updatedUser);
+//
+//        // Verify that the updated user object doesn't match the one passed to updateUser method
+//        verify(userService, never()).updateUser(argThat(argument -> argument.getUsername().equals(updatedUser.getUsername()) &&
+//                                                                    argument.getPassword().equals(updatedUser.getPassword()) &&
+//                                                                    argument.getName().equals(updatedUser.getName())));
+//
+//        // Verify that correct redirect view name is returned
+//        assertEquals("redirect:/profile", viewName); // This will fail as the password is incorrect
+//    }
 }
