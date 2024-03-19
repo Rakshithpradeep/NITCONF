@@ -34,5 +34,22 @@ public class ReviewedPapersController {
         return "reviewedpapers";
     }
 
-    
+    @PutMapping("/updatePaperStatus/{paperId}/{decision}")
+    @CrossOrigin
+    @ResponseBody
+    public ResponseEntity<String> updatePaperStatus(@PathVariable("paperId") Long paperId, @PathVariable("decision") String decision) {
+        Optional<Paper> optionalPaper = paperRepository.findById(paperId);
+        if (optionalPaper.isPresent()) {
+            Paper paper = optionalPaper.get();
+            if (decision.equals("accept")) {
+                paper.setStatus("accepted");
+            } else if (decision.equals("reject")) {
+                paper.setStatus("rejected");
+            }
+            paperRepository.save(paper);
+            return new ResponseEntity<>("Paper status updated successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Paper not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }
