@@ -26,14 +26,15 @@ public class ReviewedPapersController {
 
     @Autowired
     private PaperRepository paperRepository;
-
+//retrive all the papers to display
     @GetMapping("/reviewedpapers")
     public String getAllPapers(Model model) {
         List<Paper> reviewedPapers = paperService.getPapersByStatus("reviewed");
         model.addAttribute("reviewedPapers", reviewedPapers);
         return "reviewedpapers";
     }
-
+   
+  //for updating status of the paper to accepted
     @PutMapping("/updatePaperStatus/{paperId}/{decision}")
     @CrossOrigin
     @ResponseBody
