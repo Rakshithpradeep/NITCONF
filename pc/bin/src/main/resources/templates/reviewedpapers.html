@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-KyZXEAg3QhqLMpMIHdGQ8tNqQJ2z9qgx4lUAf3/70p5p1K6L6p61Upc9lEmntqXuSgyjgTFPKvmqD2U6u3/eGg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -276,6 +278,7 @@
             <table>
                 <thead>
                     <tr>
+                    	<th>Id</th>
                         <th>Title</th>
                         <th>Author</th>
                         <th>Abstract</th>
@@ -284,37 +287,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Machine Learning in Healthcare</td>
-                        <td>Hemanth</td>
-                        <td class="abstract-link" onclick="showAbstract('Machine Learning in Healthcare', 'Hemanth', 'largepreview.png')">View Abstract</td>
-                        <td class="comments-link" onclick="showComments('Machine Learning in Healthcare', 'Hemanth')">View Comments</td>
-                         <td>
-    <select id="expertise" name="expertise" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
+    <tr th:each="paper : ${reviewedPapers}">
+    	<td th:text="${paper.id}"></td>
+        <td th:text="${paper.title}"></td>
+        <td th:text="${paper.author}"></td>
+         <td >
+   							 <a class="abstract-link" th:href="${paper.link}" target="_blank">View PDF</a>
+		</td>
+        <td class="comments-link" onclick="showComments('${paper.title}', '${paper.author}')">View Comments</td>
+        <td>
+    <select id="decision_${paper.id}" name="decision" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
         <option value="none">None</option>
         <option value="accept">Accept</option>
         <option value="reject">Reject</option>
     </select>
-    <button onclick="confirmDecision(this)">Confirm</button>
+    <button th:attr="onclick='confirmDecision(\'' + ${paper.id} + '\', this)'">Confirm</button>
 </td>
-                    </tr>
-                    <tr>
-                        <td>Data Visualization Techniques</td>
-                        <td>Deekshitha</td>
-                        <td class="abstract-link" onclick="showAbstract('Data Visualization Techniques', 'Deekshitha', 'largepreview (1).png')">View
-                            Abstract</td>
-                        <td class="comments-link" onclick="showComments('Data Visualization Techniques', 'Deekshitha')">View Comments</td>
-<td>
-    <select id="expertise" name="expertise" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
-        <option value="none">None</option>
-        <option value="accept">Accept</option>
-        <option value="reject">Reject</option>
-    </select>
-    <button onclick="confirmDecision(this)">Confirm</button>
-</td>
-                    </tr>
-                    <!-- Add more rows with dummy information and abstract links as needed -->
-                </tbody>
+
+    </tr>
+</tbody>
             </table>
 
             <!-- Abstract Popup -->
@@ -338,7 +329,9 @@
         </div>
     </main>
 
-    <script>
+    <script th:inline="javascript">
+    var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
         const menuIcon = document.getElementById('menu-icon');
         const menuToggle = document.getElementById('menu-toggle');
         const mainContent = document.querySelector('main');
@@ -366,25 +359,42 @@
             menuToggle.checked = false;
             toggleMenuVisibility();
         }
-        function confirmDecision(button) {
-        var select = button.previousElementSibling; // Get the dropdown element
+        
+        
+        function confirmDecision(paperId, button) {
+            var select = button.previousElementSibling; // Get the dropdown element
+            var decision = select.value;
 
-        if (select.value === 'none') {
-            alert("Please select 'Accept' or 'Reject' first.");
-            return;
+            if (decision === 'none') {
+                alert("Please select 'Accept' or 'Reject' first.");
+                return;
+            }
+
+            var td = button.parentNode; // Get the parent <td> element
+            var tr = td.parentNode; // Get the parent <tr> element (the row)
+
+            // Create a new text node with the decision and set it as the innerHTML of the <td> element
+            td.innerHTML = decision === 'accept' ? '<b>ACCEPTED</b>' : '<b>REJECTED</b>';
+
+            // Send AJAX request to update the paper status
+            var xhr = new XMLHttpRequest();
+            xhr.open('PUT', '/updatePaperStatus/' + paperId + '/' + decision, true);
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Paper status updated successfully
+                    // Hide the row after 10 seconds
+                    setTimeout(function () {
+                        tr.style.display = 'none';
+                    }, 5000); // 10000 milliseconds = 10 seconds
+                } else {
+                    // Error handling
+                    alert('Failed to update paper status. Please try again.');
+                }
+            };
+            xhr.send();
         }
 
-        var td = button.parentNode; // Get the parent <td> element
-        var tr = td.parentNode; // Get the parent <tr> element (the row)
-
-        // Create a new text node with the decision and set it as the innerHTML of the <td> element
-        td.innerHTML = select.value === 'accept' ? '<b>ACCEPTED</b>' : '<b>REJECTED</b>';
-
-        // Hide the row after 10 seconds
-        setTimeout(function() {
-            tr.style.display = 'none';
-        }, 10000); // 10000 milliseconds = 10 seconds
-    }
 
         function showAbstract(title, author, imagePath) {
             var popupTitle = document.getElementById('popupTitle');
