@@ -337,16 +337,16 @@ color:white;}
                
                 <tbody>
                    <tr>
-                        <th>Name</th>
                         <th>Id</th>
+                        <th>Name</th>
                         <th>Expertise</th>
                         <th>PapersCount</th>
                         <th>Email</th>
                         <th>Mobile</th>
                     </tr>
                     <tr th:each="reviewer: ${reviewersList}">
-                        <td th:text="${reviewer.Name}"></td>
                         <td th:text="${reviewer.id}"></td>
+                        <td th:text="${reviewer.Name}"></td>
                         <td th:text="${reviewer.Expertise}"></td>
                         <td th:text="${reviewer.PapersCount}"></td>
                         <td th:text="${reviewer.Email}"></td>
