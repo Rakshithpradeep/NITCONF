@@ -233,6 +233,56 @@
             font-family: "Roboto";
 
         }
+        
+       .filter-box {
+    background-color: rgba(41, 128, 185, 0.7); /* Semi-transparent blue background */
+    border-radius: 15px; /* Rounded edges */
+    padding: 10px; /* Add some padding */
+    margin-bottom: 20px; /* Add margin at the bottom for spacing */
+    width: 40vw; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+}
+
+
+.filter-box label, .filter-box input, .filter-box button {
+    color: #fff; /* Text color */
+    font-weight:bolder;
+    font-size: 16px; /* Text size */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background: none; /* Transparent background */
+}
+
+.filter-box input {
+	color:#fff;
+	font-weight:100;
+	font-style:italic;
+    width: 200px; /* Adjust width as needed */
+    padding: 8px; /* Add padding */
+    margin-right: 10px; /* Add some margin to separate input and button */
+}
+
+.filter-box button {
+    padding: 8px 15px; /* Add padding */
+    border-radius: 5px; /* Rounded button */
+    background-color: #2980b9; /* Button background color */
+    cursor: pointer; /* Add cursor pointer */
+}
+
+.filter-box button:hover {
+    background-color: #3498db;; /* Darker background color on hover */
+}
+
+.filter-box input::placeholder {
+    color: #fff; /* Placeholder text color */
+    font-weight: 100; /* Placeholder text font weight */
+    font-style: italic; /* Placeholder text italic style */
+}
+
+
+.hem{
+color:white;}
+        
 
 
         @media (min-width: 768px) {
@@ -240,6 +290,7 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+        
     </style>
     <title>NITCONF Reviewers</title>
 </head>
@@ -275,11 +326,12 @@
         <div class="dashboard-container">
             <h2 style="color: #3498db;">Reviewers</h2>
 		        <!-- Filter button and input field -->
-		    <div>
-		        <label for="expertiseFilter">Filter by Expertise:</label>
-		        <input type="text" id="expertiseFilter" placeholder="Enter expertise...">
-		        <button onclick="filterByExpertise()">Filter</button>
-		    </div>
+		    <div class="filter-box">
+    <label class="hem" for="expertiseFilter">Filter by Expertise:</label>
+    <input type="text" id="expertiseFilter" placeholder="Enter expertise...">
+    <button onclick="filterByExpertise()">Filter</button>
+</div>
+		    
                 <!-- Displaying Reviewers Table -->
             <table>
                
