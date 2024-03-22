@@ -202,6 +202,12 @@
             /* Set the maximum height as needed */
             border-radius: 8px;
         }
+        
+        .card-link {
+    text-decoration: none; /* Removes underlines under the text */
+    color: inherit; /* Inherits color from the parent */
+}
+        
     </style>
 </head>
 
@@ -240,42 +246,54 @@
 
     <main>
         <div class="cards-container">
+              <a href="/reviewers" class="card-link">
             <div class="card animated">
                 <h1 class="cardH">Reviewers Info</h1>
-                <p> Information about the individuals responsible for reviewing conference submissions.</p>
+                <p>Information about the individuals responsible for reviewing conference submissions.</p>
                 <img src="https://cdn.pixabay.com/photo/2019/10/25/10/49/audit-4576720_1280.jpg" class="imgH" alt="Reviewers Image">
             </div>
+        </a>
 
+              <a href="/discussions" class="card-link">
             <div class="card animated">
                 <h1 class="cardH">Discussions Info</h1>
-                <p> Engage in discussions to share thoughts and ideas with other members
-                    .</p>
+                <p>Engage in discussions to share thoughts and ideas with other members.</p>
                 <img src="https://cdn.pixabay.com/photo/2022/09/24/15/11/chair-circle-7476556_1280.jpg" class="imgH" alt="Discussions Image">
             </div>
+        </a>
 
+            <a href="/reviewedpapers" class="card-link">
             <div class="card animated">
                 <h1 class="cardH">Reviewed Papers Info</h1>
                 <p>Explore papers that have undergone a thorough review process.</p>
                 <img src="https://cdn.pixabay.com/photo/2019/10/11/14/33/book-4541987_1280.jpg" class="imgH" alt="Reviewed Papers Image">
             </div>
+        </a>
 
+             <a href="/unreviewedpapers" class="card-link">
             <div class="card animated">
                 <h1 class="cardH">Unreviewed Papers Info</h1>
-                <p> Discover the latest submissions awaiting review and feedback.</p>
+                <p>Discover the latest submissions awaiting review and feedback.</p>
                 <img src="https://cdn.pixabay.com/photo/2018/10/10/14/44/audit-3737447_1280.jpg" class="imgH" alt="Unreviewed Papers Image">
             </div>
+        </a>
 
+           <a href="/acceptedpapers" class="card-link">
             <div class="card animated">
                 <h1 class="cardH">Accepted Papers Info</h1>
-                <p> Papers that have been accepted by the Committee.</p>
+                <p>Papers that have been accepted by the Committee.</p>
                 <img src="https://cdn.pixabay.com/photo/2020/06/02/13/11/verified-5250897_1280.png" class="imgH" alt="Accepted Papers Image">
             </div>
+        </a>
 
+
+           <a href="/rejectedpapers" class="card-link">
             <div class="card animated">
                 <h1 class="cardH">Rejected Papers Info</h1>
                 <p>Papers that are rejected and are needed for improvements.</p>
                 <img src="https://cdn.pixabay.com/photo/2020/06/02/13/32/denied-5251012_1280.png" class="imgH" alt="Rejected Papers Image">
             </div>
+        </a>
 
 
         </div>
