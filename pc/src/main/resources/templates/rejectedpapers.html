@@ -239,6 +239,51 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+        
+        .filter-box {
+    background-color: rgba(41, 128, 185, 0.7); /* Semi-transparent blue background */
+    border-radius: 15px; /* Rounded edges */
+    padding: 10px; /* Add some padding */
+    margin-bottom: 20px; /* Add margin at the bottom for spacing */
+    width: 40vw; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+}
+
+
+.filter-box label, .filter-box input, .filter-box button {
+    color: #fff; /* Text color */
+    font-weight:bolder;
+    font-size: 16px; /* Text size */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background: none; /* Transparent background */
+}
+
+.filter-box input {
+	color:#fff;
+	font-weight:100;
+	font-style:italic;
+    width: 200px; /* Adjust width as needed */
+    padding: 8px; /* Add padding */
+    margin-right: 10px; /* Add some margin to separate input and button */
+}
+
+.filter-box button {
+    padding: 8px 15px; /* Add padding */
+    border-radius: 5px; /* Rounded button */
+    background-color: #2980b9; /* Button background color */
+    cursor: pointer; /* Add cursor pointer */
+}
+
+.filter-box button:hover {
+    background-color: #3498db;; /* Darker background color on hover */
+}
+
+.filter-box input::placeholder {
+    color: #fff; /* Placeholder text color */
+    font-weight: 100; /* Placeholder text font weight */
+    font-style: italic; /* Placeholder text italic style */
+}
     </style>
     <title>NITCONF Rejected Papers</title>
 </head>
@@ -272,11 +317,17 @@
     <main>
         <div class="dashboard-container">
             <h2 style="color: #3498db;">Rejected Papers</h2>
+            <div class="filter-box">
+    <label class="hem" for="expertiseFilter">Filter by Topic:</label>
+    <input type="text" id="expertiseFilter" placeholder="Enter Topic...">
+    <button onclick="filterByExpertise()">Filter</button>
+</div>
             <table>
                 <thead>
                     <tr>
                     	<th>Id</th>
                         <th>Title</th>
+                        <th>Topic</th>
                         <th>Author</th>
                         <th>Abstract</th>
                         <th>View Comments</th>
@@ -286,6 +337,7 @@
     <tr th:each="paper : ${rejectedPapers}">
     	<td th:text="${paper.id}"></td>
         <td th:text="${paper.title}"></td>
+        <td th:text="${paper.expertise}"></td>
         <td th:text="${paper.author}"></td>
          <td >
    							 <a class="abstract-link" th:href="${paper.link}" target="_blank">View PDF</a>
@@ -358,6 +410,26 @@
             popupImage.src = imagePath;
 
             abstractPopup.style.display = 'flex';
+        }
+        
+        function filterByExpertise() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("expertiseFilter");
+            filter = input.value.toUpperCase();
+            table = document.querySelector("table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2]; // Index 2 represents the Expertise column
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
         }
 
         function showComments(title, author) {
