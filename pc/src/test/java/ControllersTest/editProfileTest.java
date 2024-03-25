@@ -120,5 +120,5 @@ public class editProfileTest {
 //
 //        // Verify that correct redirect view name is returned
 //        assertEquals("redirect:/profile", viewName); // This will fail as the password is incorrect
-//    }
+//    }
 }
