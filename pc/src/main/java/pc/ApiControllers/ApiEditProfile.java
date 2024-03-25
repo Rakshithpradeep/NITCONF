@@ -1,41 +1,25 @@
 package pc.ApiControllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import pc.Model.User;
 import pc.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 public class ApiEditProfile {
 
     private final UserService userService;
 
+    @Autowired
     public ApiEditProfile(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/api/editProfile")
-    public String showEditProfilePage(Model model) {
-        // Fetch the current user details from the database
-        User currentUser = userService.getCurrentUser();
-
-        // Pass the user object to the Thymeleaf template
-        model.addAttribute("user", currentUser);
-
-        return "editProfile";
-    }
-
-    @PostMapping("/api/editProfile")
-    public String editProfile(@ModelAttribute("user") User updatedUser) {
+    @PutMapping("/api/profile")
+    public String updateProfile(@RequestBody User updatedUser) {
         // Update the user details in the database
         userService.updateUser(updatedUser);
 
-        // Redirect to the profile page or any other page as needed
-        return "redirect:/profile";
+        return "Profile updated successfully";
     }
 }
