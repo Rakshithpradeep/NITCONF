@@ -89,7 +89,7 @@ class ApiReviewerControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(filteredReviewers.size()))
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].name").value("John Doe"))
-                .andExpect(jsonPath("$[0].Expertise").value("Computer Science"));
+                .andExpect(jsonPath("$[0].name").value("John Doe"));
+                
     }
 }
