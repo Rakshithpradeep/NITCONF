@@ -46,6 +46,4 @@ public class ApiLoginControllerTest {
         assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
         assertEquals("Login failed", responseEntity.getBody());
     }
-   
-
 }
