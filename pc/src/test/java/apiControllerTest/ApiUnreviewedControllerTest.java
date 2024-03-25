@@ -67,5 +67,24 @@ public class ApiUnreviewedControllerTest {
         assertEquals(reviewersList, responseEntity.getBody());
     }
 
+    @Test
+    public void testMarkPaperAsReviewed_ExistingPaper() {
+        // Arrange
+        Long paperId = 1L;
+        Paper paper = new Paper();
+        paper.setId(paperId);
+        paper.setStatus("unreviewed");
+        when(paperRepository.findById(paperId)).thenReturn(Optional.of(paper));
+
+        // Act
+        ResponseEntity<String> responseEntity = controller.markPaperAsReviewed(paperId);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Paper with ID " + paperId + " marked as reviewed.", responseEntity.getBody());
+        assertEquals("reviewed", paper.getStatus());
+        verify(paperRepository, times(1)).save(paper);
+    }
+
 
 }
