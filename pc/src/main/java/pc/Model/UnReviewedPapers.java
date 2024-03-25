@@ -13,7 +13,8 @@ public class UnReviewedPapers {
 
 	    private String title;
 	    private String author;
-	    private String abstractContent;
+	    private String authorEmail;
+		private String abstractContent;
 	    private String assignedReviewer;
 	    
 	    public UnReviewedPapers() {
@@ -75,4 +76,14 @@ public class UnReviewedPapers {
 	    public void setAssignedReviewer(String assignedReviewer) {
 	        this.assignedReviewer = assignedReviewer;
 	    }
+	    public String getAuthorEmail() {
+				return authorEmail;
+			}
+
+
+
+			public void setAuthorEmail(String authorEmail) {
+				this.authorEmail = authorEmail;
+			}
+
 }
