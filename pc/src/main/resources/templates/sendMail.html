@@ -273,6 +273,29 @@ input[type="submit"]:hover {
             menuToggle.checked = false;
             toggleMenuVisibility();
         }
+        
+        function validateForm() {
+            const to = document.getElementById('to').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            if (to.trim() === '' || subject.trim() === '' || message.trim() === '') {
+                alert('Please fill in all fields.');
+                return false;
+            }
+
+            // If all fields are filled, return true to submit the form
+            return true;
+        }
+
+        // Add event listener to the form for submission
+        document.querySelector('form').addEventListener('submit', function (event) {
+            if (!validateForm()) {
+                event.preventDefault(); // Prevent form submission if validation fails
+            } else {
+                alert('Email sent successfully!'); // Display success message
+            }
+        });
     </script>
 </body>
 </html>
