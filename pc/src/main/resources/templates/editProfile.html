@@ -118,6 +118,7 @@
 
         .card:hover {
             transform: scale(1.05);
+            
         }
 
         .card img {
@@ -161,6 +162,59 @@
 form label {
     display: block;
     margin-bottom: 10px; /* Add margin-bottom for spacing between labels */
+    color: #fff; /* Set label text color to white */
+}
+
+form input[type="text"],
+form input[type="password"],
+form button {
+    width: calc(100% - 20px); /* Adjust width to leave room for padding */
+    padding: 10px; /* Add padding to input fields and button */
+    margin-bottom: 20px; /* Add margin-bottom for spacing between elements */
+    border: none; /* Remove default input borders */
+    border-radius: 5px; /* Add border-radius for input fields and button */
+    background-color: rgba(255, 255, 255, 0.1); /* Set input background color */
+    color: #fff; /* Set input text color to white */
+    font-family: 'Raleway', sans-serif; /* Use Raleway font for inputs */
+}
+.card form {
+    padding-right: 20px; /* Add padding to the right side of the form */
+}
+
+.card button {
+    width: 150px; /* Set a specific width for the button */
+    margin: 0 auto; /* Center the button horizontally */
+    display: block; /* Ensure the button is displayed as a block element */
+    padding: 10px; /* Add padding to the button */
+    border: none; /* Remove default button border */
+    border-radius: 5px; /* Add border-radius to the button */
+    background-color: #3498db; /* Set button background color */
+    color: #fff; /* Set button text color to white */
+    font-family: 'Raleway', sans-serif; /* Use Raleway font for button text */
+    font-size: 16px; /* Set font size for button text */
+    cursor: pointer; /* Add pointer cursor to button */
+    transition: background-color 0.3s; /* Add transition effect to button */
+}
+
+.card button:hover {
+    background-color: #2980b9; /* Change button background color on hover */
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    outline: none; /* Remove focus outline */
+    background-color: rgba(255, 255, 255, 0.2); /* Change background color on focus */
+}
+
+form button {
+    background-color: #3498db; /* Set button background color */
+    color: #fff; /* Set button text color to white */
+    cursor: pointer; /* Add pointer cursor to button */
+    transition: background-color 0.3s; /* Add transition effect to button */
+}
+
+form button:hover {
+    background-color: #2980b9; /* Change button background color on hover */
 }
 
 /* Your existing styles */
@@ -208,6 +262,8 @@ form label {
             /* Set the maximum height as needed */
             border-radius: 8px;
         }
+        
+        
     </style>
 </head>
 
@@ -275,7 +331,35 @@ form label {
             menuToggle.checked = !menuToggle.checked;
             toggleMenuVisibility();
         });
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector('form');
 
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting
+
+                // Check if any input field (except password) is empty
+                const inputs = form.querySelectorAll('input[type="text"]');
+                let isEmpty = false;
+
+                inputs.forEach(function(input) {
+                    if (input.value.trim() === '') {
+                        isEmpty = true;
+                        input.style.border = '2px solid red'; // Highlight empty fields
+                    } else {
+                        input.style.border = 'none'; // Remove highlighting from non-empty fields
+                    }
+                });
+
+                if (!isEmpty) {
+                    // If no fields are empty, submit the form
+                    form.submit();
+                } else {
+                    // If any field is empty, display an alert
+                    alert('Please fill in all fields');
+                }
+            });
+        });
         function toggleMenuVisibility() {
             const isMenuOpen = menuToggle.checked;
 
