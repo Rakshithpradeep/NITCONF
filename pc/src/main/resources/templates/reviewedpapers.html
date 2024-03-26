@@ -353,7 +353,7 @@ table button:hover {
                         <th>Author</th>
                         <th>Abstract</th>
                         <th>View Comments</th>
-                         <th>Accept/Reject</th>
+                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -438,7 +438,7 @@ table button:hover {
             var decision = select.value;
 
             if (decision === 'none') {
-                alert("Please select 'Accept' or 'Reject' first.");
+                alert("Please select an option.");
                 return;
             }
 
