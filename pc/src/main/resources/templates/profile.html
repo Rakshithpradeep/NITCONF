@@ -200,6 +200,45 @@
             /* Set the maximum height as needed */
             border-radius: 8px;
         }
+        
+        .btn {
+    display: inline-block;
+    background-color: #3498db; /* Button background color */
+    color: #fff; /* Button text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none; /* Remove default link underline */
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #2980b9; /* Darker shade of button background color on hover */
+}
+
+.btn-primary {
+    background-color: #3498db; /* Primary button background color */
+}
+
+.btn-primary:hover {
+    background-color: #2980b9; /* Darker shade of primary button background color on hover */
+}
+
+.card {
+    position: relative; /* Required for absolute positioning */
+}
+
+.card-image {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    width: 50px; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* For circular shape, adjust border-radius as needed */
+}
+
+        
     </style>
 </head>
 
@@ -237,13 +276,17 @@
             <!-- Include your dashboard card content here -->
 
             <!-- Profile Card -->
-            <div class="card animated">
-                <h1 class="cardH">User Profile</h1>
-                <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
-                <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
-                <p><strong>Phone:</strong> <span th:text="${user.phone}"></span></p>
-                <a th:href="@{/editProfile}" class="btn btn-primary">Edit Profile</a>
-            </div>
+           <div class="card animated">
+    <!-- Small image in the top right corner -->
+  
+  
+
+    <h1 class="cardH">User Profile</h1>
+    <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+    <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+    <p><strong>Phone:</strong> <span th:text="${user.phone}"></span></p>
+    <a th:href="@{/editProfile}" class="btn btn-primary">Edit Profile</a>
+</div>
 
         </div>
     </main>
