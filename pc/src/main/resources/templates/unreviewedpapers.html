@@ -469,17 +469,23 @@
         </div>
 
     </header>
-    <nav>
+     <nav>
         <h2 class="navH">MENU</h2>
         <a th:href="@{/dashboard}"><span class="icon">&#127968;</span> Home</a>
         <a th:href="@{/reviewers}"><span class="icon">&#127991;</span> Reviewers</a>
         <a th:href="@{/discussions}"><span class="icon">&#128172;</span> Discussions</a>
+        <a th:href="@{/allpapers}"><span class="icon">&#127890;</span> All Papers</a>
+
+
+        <a th:href="@{/unreviewedpapers}"><span class="icon">&#8987;</span> Unreviewed Papers</a>
+
         <a th:href="@{/reviewedpapers}"><span class="icon">&#128195;</span> Reviewed Papers</a>
-        <a th:href="@{/unreviewedpapers}"><span class="icon">&#128190;</span> UnreviewedPapers</a>
+        
         <a th:href="@{/acceptedpapers}"><span class="icon">&#128221;</span> Accepted Papers</a>
         <a th:href="@{/rejectedpapers}"><span class="icon">&#128683;</span> Rejected Papers</a>
-        <a th:href="@{/logout}" value="Logout" class="logout-icon">&#128075; LogOut</a>
+        <a th:href="@{/logout}" value="Logout" class="logout-icon">&#128075;</span> LogOut</a>
         <a href="#" onclick="closeMenu()" class="back-icon">&#8592;<i class=""></i> </a>
+        
 
     </nav>
     <main>
