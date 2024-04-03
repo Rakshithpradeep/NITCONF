@@ -243,29 +243,32 @@
         .filter-box {
     background-color: rgba(41, 128, 185, 0.7); /* Semi-transparent blue background */
     border-radius: 15px; /* Rounded edges */
-    padding: 10px; /* Add some padding */
+    padding: 10px; /* Reduce padding */
     margin-bottom: 20px; /* Add margin at the bottom for spacing */
-    width: 40vw; /* Adjust width as needed */
+    width: 50vw; /* Adjust width as needed */
     margin: 0 auto; /* Center horizontally */
+    display: flex; /* Use flexbox to align items in the same line */
+    align-items: center; /* Center items vertically */
 }
-
 
 .filter-box label, .filter-box input, .filter-box button {
     color: #fff; /* Text color */
-    font-weight:bolder;
+    font-weight: bolder;
     font-size: 16px; /* Text size */
     border: none; /* Remove borders */
     outline: none; /* Remove outline */
     background: none; /* Transparent background */
+    margin-right: 10px; /* Add some margin to separate input and button */
 }
 
 .filter-box input {
-	color:#fff;
-	font-weight:100;
-	font-style:italic;
+    color: #fff;
+    font-weight: 100;
+    font-style: italic;
     width: 200px; /* Adjust width as needed */
     padding: 8px; /* Add padding */
-    margin-right: 10px; /* Add some margin to separate input and button */
+   border: 1px solid #fff;  /* Add white border */
+    border-radius:10px;
 }
 
 .filter-box button {
@@ -276,7 +279,7 @@
 }
 
 .filter-box button:hover {
-    background-color: #3498db;; /* Darker background color on hover */
+    background-color: #3498db; /* Darker background color on hover */
 }
 
 .filter-box input::placeholder {
@@ -284,6 +287,52 @@
     font-weight: 100; /* Placeholder text font weight */
     font-style: italic; /* Placeholder text italic style */
 }
+
+.filter-box select, .filter-box input {
+    color: #fff; /* Text color */
+    font-weight: 100;
+    font-style: italic;
+    padding: 8px;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    background: rgba(41, 128, 185, 0.7); /* Semi-transparent blue background */
+    margin-right: 10px; /* Add some margin to separate input and button */
+    width: 200px; /* Adjust width as needed */
+}
+
+.filter-box select:focus, .filter-box input:focus {
+    outline: none; /* Remove focus outline */
+    border-color: #2980b9; /* Change border color on focus */
+}
+
+.filter-box button {
+    padding: 8px 15px; /* Add padding */
+    border-radius: 5px; /* Rounded button */
+    background-color: #2980b9; /* Button background color */
+    cursor: pointer; /* Add cursor pointer */
+}
+
+.filter-box button:hover {
+    background-color: #2980b9; /* Darker background color on hover */
+}
+
+.filter-box input::placeholder {
+    color: #fff; /* Placeholder text color */
+    font-weight: 100; /* Placeholder text font weight */
+    font-style: italic; /* Placeholder text italic style */
+}
+
+.filter-box select option {
+    color: #fff; /* Change color of dropdown options */
+    background: rgba(41, 128, 185, 0.7); /* Semi-transparent blue background */
+    
+}
+
+.filter-box select option:hover {
+    background-color: #2980b9; /* Change background color on hover */
+}
+
+
 
 @keyframes fadeIn {
             from {
@@ -300,12 +349,16 @@
         main {
             animation: fadeIn 1s ease-out;
         }
+        
+      
+
+        
     
     
     </style>
     
         
-    </style>
+    
     <title>NITCONF All Papers</title>
 </head>
 
@@ -345,11 +398,22 @@
     <main>
         <div class="dashboard-container">
             <h2 style="color: #3498db;">All Papers</h2>
-            <div class="filter-box">
-    <label class="hem" for="expertiseFilter">Filter by Topic:</label>
-    <input type="text" id="expertiseFilter" placeholder="Enter Topic...">
-    <button onclick="filterByExpertise()">Filter</button>
+            <!-- Update the filter box in HTML -->
+<div class="filter-box">
+    <label class="hem" for="statusFilter">Filter by:</label>
+    <select id="statusFilter">
+        <option value="">All</option>
+        <option value="Unreviewed">Unreviewed</option>
+        <option value="Reviewed">Reviewed</option>
+        <option value="Accepted">Accepted</option>
+        <option value="Rejected">Rejected</option>
+    </select>
+    <label class="hem" for="expertiseFilter"></label>
+    <input type="text" id="expertiseFilter" placeholder="Topic...">
+    <button onclick="filterPapers()">Filter</button>
 </div>
+
+
             <table>
                 <thead>
                     <tr>
@@ -428,25 +492,30 @@
             toggleMenuVisibility();
         }
         
-        function filterByExpertise() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("expertiseFilter");
-            filter = input.value.toUpperCase();
-            table = document.querySelector("table");
-            tr = table.getElementsByTagName("tr");
+     // Modify the filter function in JavaScript
+       function filterPapers() {
+    var statusInput = document.getElementById("statusFilter").value.toUpperCase();
+    var expertiseInput = document.getElementById("expertiseFilter").value.toUpperCase();
+    var table = document.querySelector("table");
+    var tr = table.getElementsByTagName("tr");
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[2]; // Index 2 represents the Expertise column
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
+    for (var i = 0; i < tr.length; i++) {
+        var statusColumn = tr[i].getElementsByTagName("td")[5]; // Index 5 represents the Status column
+        var expertiseColumn = tr[i].getElementsByTagName("td")[2]; // Index 2 represents the Expertise column
+
+        if (statusColumn && expertiseColumn) {
+            var statusText = statusColumn.textContent || statusColumn.innerText;
+            var expertiseText = expertiseColumn.textContent || expertiseColumn.innerText;
+
+            if ((statusInput === "" || statusText.toUpperCase() === statusInput) && expertiseText.toUpperCase().indexOf(expertiseInput) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
             }
         }
+    }
+}
+
 
         function showAbstract(title, author, imagePath) {
             var popupTitle = document.getElementById('popupTitle');
