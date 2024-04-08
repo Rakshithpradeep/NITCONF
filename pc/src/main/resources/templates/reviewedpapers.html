@@ -388,7 +388,10 @@ table button:hover {
          <td >
    							 <a class="abstract-link" th:href="${paper.link}" target="_blank">View PDF</a>
 		</td>
-        <td class="comments-link" onclick="showComments('${paper.title}', '${paper.author}')">View Comments</td>
+      <td class="comments-link" th:attr="onclick='showComments(\'' + ${paper.title} + '\', \'' + ${paper.author} + '\')'">View Comments</td>
+
+
+
         <td>
     <select id="decision_${paper.id}" name="decision" style="background: #3498db; color: #fff; padding: 8px; border: none; border-radius: 5px;">
         <option value="none">None</option>

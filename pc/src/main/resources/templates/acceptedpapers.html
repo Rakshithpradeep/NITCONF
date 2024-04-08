@@ -371,7 +371,9 @@
          <td >
    							 <a class="abstract-link" th:href="${paper.link}" target="_blank">View PDF</a>
 		</td>
-        <td class="comments-link" onclick="showComments('${paper.title}', '${paper.author}')">View Comments</td>
+
+<td class="comments-link" th:attr="onclick='showComments(\'' + ${paper.title} + '\', \'' + ${paper.author} + '\')'">View Comments</td>
+
         
 
     </tr>
